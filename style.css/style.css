@@ -62,18 +62,19 @@ body {
 /* PORTADA */
 
 .hero {
-    min-height: 500px;
     display: grid;
-    grid-template-columns: 35% 65%;
+    grid-template-columns: 380px minmax(0, 1fr);
     align-items: center;
-    padding: 50px 6%;
-    gap: 40px;
+    gap: 50px;
+
+    width: 100%;
     max-width: 1400px;
     margin: 0 auto;
+    padding: 60px 6%;
 }
 
 .hero-texto {
-    max-width: 500px;
+    width: 100%;
 }
 
 .subtitulo {
@@ -84,14 +85,14 @@ body {
 }
 
 .hero h1 {
-    font-size: 60px;
+    font-size: 52px;
     line-height: 1.05;
     font-weight: 400;
     margin-bottom: 25px;
 }
 
 .hero p {
-    font-size: 17px;
+    font-size: 16px;
     line-height: 1.6;
     color: #666;
     margin-bottom: 30px;
@@ -107,24 +108,23 @@ body {
 }
 
 
-/* ESPACIO DE IMAGEN */
+/* IMAGEN DE PORTADA */
 
 .hero-imagen {
     width: 100%;
-    height: 430px;
-    background-color: #e8e8e3;
+    height: 420px;
     overflow: hidden;
 }
 
 .hero-imagen img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
     display: block;
+    object-fit: cover;
+    object-position: center;
 }
 
-
-/* CATÁLOGO */
+  /* CATÁLOGO */
 
 .seccion-catalogo {
     padding: 100px 6%;
@@ -159,7 +159,6 @@ body {
     background-color: #f5f5f5;
     padding: 30px;
     height: 250px;
-
     display: flex;
     align-items: center;
     justify-content: center;
@@ -191,6 +190,7 @@ body {
     font-weight: bold;
     margin: 0;
 }
+
 .tarjeta-producto:hover {
     transform: translateY(-6px);
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.10);
@@ -204,18 +204,19 @@ footer {
     background-color: #202020;
     color: white;
 }
+
 .logo img {
     width: 140px;
     height: auto;
     display: block;
 }
+
+
 /* =========================
    VERSIÓN CELULAR
    ========================= */
 
 @media (max-width: 768px) {
-
-    /* ENCABEZADO */
 
     .encabezado {
         padding: 18px 5%;
@@ -238,18 +239,14 @@ footer {
         font-size: 13px;
     }
 
-
-    /* PORTADA */
-
     .hero {
-        min-height: auto;
         grid-template-columns: 1fr;
         padding: 50px 6%;
         gap: 35px;
     }
 
     .hero-texto {
-        max-width: 100%;
+        width: 100%;
     }
 
     .hero h1 {
@@ -263,9 +260,6 @@ footer {
     .hero-imagen {
         height: 300px;
     }
-
-
-    /* CATÁLOGO */
 
     .seccion-catalogo {
         padding: 60px 6%;
@@ -287,9 +281,6 @@ footer {
     .producto-imagen {
         height: 280px;
     }
-
-
-    /* PIE DE PÁGINA */
 
     footer {
         padding: 40px 6%;
