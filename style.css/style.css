@@ -198,3 +198,89 @@ footer {
     height: auto;
     display: block;
 }
+/* =========================
+   VERSIÓN CELULAR
+   ========================= */
+
+@media (max-width: 768px) {
+
+    /* ENCABEZADO */
+
+    .encabezado {
+        padding: 18px 5%;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .logo img {
+        width: 110px;
+    }
+
+    .menu {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .menu a {
+        font-size: 13px;
+    }
+
+
+    /* PORTADA */
+
+    .hero {
+        min-height: auto;
+        grid-template-columns: 1fr;
+        padding: 50px 6%;
+        gap: 35px;
+    }
+
+    .hero-texto {
+        max-width: 100%;
+    }
+
+    .hero h1 {
+        font-size: 40px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    .hero-imagen {
+        height: 300px;
+    }
+
+
+    /* CATÁLOGO */
+
+    .seccion-catalogo {
+        padding: 60px 6%;
+    }
+
+    .titulo-seccion {
+        margin-bottom: 30px;
+    }
+
+    .titulo-seccion h2 {
+        font-size: 32px;
+    }
+
+    .productos {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .producto-imagen {
+        height: 280px;
+    }
+
+
+    /* PIE DE PÁGINA */
+
+    footer {
+        padding: 40px 6%;
+    }
+}
