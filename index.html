@@ -7,17 +7,31 @@
 
     <title>Óptica Aqua</title>
 
+    <!-- TIPOGRAFÍA POPPINS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- ESTILOS -->
     <link rel="stylesheet" href="style.css/style.css">
+
 </head>
 
 <body>
 
-    <!-- ENCABEZADO -->
+
+    <!-- =========================
+         ENCABEZADO
+         ========================= -->
+
     <header class="encabezado">
 
         <div class="logo">
-            <img src="imagenes/Aqua Logo.png" alt="">
-
+            <img src="imagenes/Aqua Logo.png" alt="Óptica Aqua">
         </div>
 
         <nav class="menu">
@@ -28,14 +42,159 @@
         </nav>
 
         <div class="acciones">
-            <button>Buscar</button>
+            <button id="abrir-filtros">
+                Buscar
+            </button>
         </div>
 
     </header>
 
 
-    <!-- PORTADA -->
+    <!-- =========================
+         PANEL DE BÚSQUEDA
+         ========================= -->
+
+    <div class="panel-filtros" id="panel-filtros">
+
+        <div class="filtros-contenido">
+
+            <div class="filtros-encabezado">
+
+                <h2>
+                    Encuentra tus armazones
+                </h2>
+
+                <button id="cerrar-filtros">
+                    ×
+                </button>
+
+            </div>
+
+
+            <!-- BUSCADOR -->
+
+            <input
+                type="text"
+                id="buscar-modelo"
+                placeholder="Buscar marca, modelo o característica..."
+            >
+
+
+            <div class="filtros-opciones">
+
+
+                <!-- MARCA -->
+
+                <select id="filtro-marca">
+
+                    <option value="">
+                        Todas las marcas
+                    </option>
+
+                </select>
+
+
+                <!-- MATERIAL -->
+
+                <select id="filtro-material">
+
+                    <option value="">
+                        Todos los materiales
+                    </option>
+
+                    <option value="PASTA">
+                        Pasta
+                    </option>
+
+                    <option value="METALICO">
+                        Metálico
+                    </option>
+
+                    <option value="TITANIO">
+                        Titanio
+                    </option>
+
+                </select>
+
+
+                <!-- COLOR -->
+
+                <select id="filtro-color">
+
+                    <option value="">
+                        Todos los colores
+                    </option>
+
+                    <option value="NEGRO">Negro</option>
+                    <option value="CAREY">Carey</option>
+                    <option value="TRANSPARENTE">Transparente</option>
+                    <option value="VINO">Vino</option>
+                    <option value="ROJO">Rojo</option>
+                    <option value="AZUL">Azul</option>
+                    <option value="DORADO">Dorado</option>
+                    <option value="GRIS">Gris</option>
+                    <option value="VERDE">Verde</option>
+                    <option value="MORADO">Morado</option>
+                    <option value="CAFE">Café</option>
+                    <option value="PLATA">Plata</option>
+                    <option value="NARANJA">Naranja</option>
+                    <option value="BLANCO">Blanco</option>
+
+                </select>
+
+
+                <!-- PRECIO -->
+
+                <select id="filtro-precio">
+
+                    <option value="">
+                        Cualquier precio
+                    </option>
+
+                    <option value="500">
+                        Hasta $500
+                    </option>
+
+                    <option value="800">
+                        Hasta $800
+                    </option>
+
+                    <option value="1000">
+                        Hasta $1,000
+                    </option>
+
+                    <option value="1500">
+                        Hasta $1,500
+                    </option>
+
+                    <option value="2000">
+                        Hasta $2,000
+                    </option>
+
+                </select>
+
+            </div>
+
+<button id="aplicar-filtros">
+    Ver resultados
+</button>
+            <button id="limpiar-filtros">
+                Limpiar filtros
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         CONTENIDO PRINCIPAL
+         ========================= -->
+
     <main>
+
+
+        <!-- PORTADA -->
 
         <section class="hero">
 
@@ -46,8 +205,14 @@
                 </p>
 
                 <h1>
-                    Encuentra el armazón
-                    que va contigo.
+                    Encuentra el
+                    <span class="titulo-turquesa">
+                        armazón
+                    </span>
+                    que va
+                    <span class="titulo-azul">
+                        contigo.
+                    </span>
                 </h1>
 
                 <p>
@@ -61,47 +226,92 @@
 
             </div>
 
+
             <div class="hero-imagen">
-                <img src="imagenes/PORTADA.png" alt="">
+
+                <img
+                    src="imagenes/OPTICA POST-03.jpg"
+                    alt="Colección Óptica Aqua"
+                >
+
             </div>
 
         </section>
 
 
-        <!-- CATÁLOGO -->
-        <section id="catalogo" class="seccion-catalogo">
+        <!-- =========================
+             CATÁLOGO
+             ========================= -->
 
-            <div class="titulo-seccion">
+        <section
+            id="catalogo"
+            class="seccion-catalogo"
+        >
 
-                <p class="subtitulo">
-                    NUESTRA SELECCIÓN
-                </p>
+            <div class="cabecera-catalogo">
 
-                <h2>
-                    Armazones destacados
-                </h2>
+    <div class="titulo-seccion">
 
-            </div>
+        <p class="subtitulo">
+            NUESTRA SELECCIÓN
+        </p>
 
-            <div class="productos">
-                <!-- Aquí generaremos los lentes -->
-            </div>
+        <h2>
+            Armazones destacados
+        </h2>
+
+    </div>
+
+    <button id="abrir-filtros-catalogo">
+        Filtrar
+    </button>
+
+</div>
+<div class="categorias-catalogo">
+    <button class="categoria activa" data-categoria="TODOS">Todos</button>
+    <button class="categoria" data-categoria="MUJER">Mujer</button>
+    <button class="categoria" data-categoria="HOMBRE">Hombre</button>
+    <button class="categoria" data-categoria="NIÑOS">Niños</button>
+    <button class="categoria" data-categoria="DEPORTE">Deporte</button>
+    <button class="categoria" data-categoria="INDUSTRIAL">Industrial</button>
+</div>
+
+
+            <!--
+                JavaScript coloca aquí
+                automáticamente las tarjetas.
+            -->
+
+            <div class="productos"></div>
+
 
         </section>
+
 
     </main>
 
 
-    <!-- PIE DE PÁGINA -->
+    <!-- =========================
+         PIE DE PÁGINA
+         ========================= -->
+
     <footer id="contacto">
 
-        <p>Óptica AQUA</p>
-        <p>Encuentra tu estilo. Ve diferente.</p>
+        <p>
+            Óptica AQUA
+        </p>
+
+        <p>
+            Encuentra tu estilo. Ve diferente.
+        </p>
 
     </footer>
 
 
+    <!-- JAVASCRIPT -->
+
     <script src="script.js/script.js"></script>
+
 
 </body>
 
