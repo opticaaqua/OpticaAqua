@@ -21,7 +21,11 @@
 
 </head>
 
-<body data-pagina="inicio">
+<button id="volver-arriba" class="volver-arriba" aria-label="Volver arriba">
+    <span class="flecha-chunky"></span>
+</button>
+
+<body data-pagina="catálogo">
 
 
     <!-- =========================
@@ -34,14 +38,18 @@
             <img src="imagenes/Aqua Logo.png" alt="Óptica Aqua">
         </div>
 
-       <nav class="menu">
-
-    <a href="#" class="activo">Inicio</a>
-    <a href="catalogo.html">Catálogo</a>
-    <a href="#nosotros">Nosotros</a>
-    <a href="#contacto">Contacto</a>
-
+<nav class="menu">
+    <a href="index.html">Inicio</a>
+  <a href="catalogo.html" class="activo">Catálogo</a>
+    <a href="index.html#nosotros">Nosotros</a>
+    <a href="index.html#contacto">Contacto</a>
 </nav>
+
+        <div class="acciones">
+            <button id="abrir-filtros">
+                Buscar
+            </button>
+        </div>
 
     </header>
 
@@ -189,121 +197,65 @@
 
     <main>
 
+        <!-- =========================
+             CATÁLOGO
+             ========================= -->
 
-        <!-- PORTADA -->
+        <section
+            id="catalogo"
+            class="seccion-catalogo"
+        >
 
-        <section class="hero">
+            <div class="cabecera-catalogo">
 
-            <div class="hero-texto">
+    <div class="titulo-seccion">
 
-                <p class="subtitulo">
-                    COLECCIÓN ÓPTICA AQUA
-                </p>
+        <h2>
+            Nuestros armazones
+        </h2>
 
-                <h1>
-                    Encuentra el
-                    <span class="titulo-azul">
-                        armazón
-                    </span>
-                    que va
-                    <span class="titulo-azul">
-                        contigo.
-                    </span>
-                </h1>
+        <p class="subtitulo">
+            ENCUENTRA EL QUE VA CONTIGO
+        </p>
 
-                <p>
-                    Explora nuestra selección de armazones
-                    y descubre tu próximo estilo.
-                </p>
+    </div>
 
-                <a href="#catalogo" class="boton">
-                    Explorar catálogo
-                </a>
+</div>
 
-            </div>
+<div class="barra-catalogo">
+
+    <div class="categorias-catalogo">
+
+        <button class="categoria activa" data-categoria="TODOS">Todos</button>
+        <button class="categoria" data-categoria="MUJER">Mujer</button>
+        <button class="categoria" data-categoria="HOMBRE">Hombre</button>
+        <button class="categoria" data-categoria="NIÑOS">Niños</button>
+        <button class="categoria" data-categoria="DEPORTE">Deporte</button>
+        <button class="categoria" data-categoria="INDUSTRIAL">Industrial</button>
+
+    </div>
+
+    <button id="abrir-filtros-catalogo">
+        Filtrar
+    </button>
+
+</div>
 
 
-            <div class="hero-imagen">
+            <!--
+                JavaScript coloca aquí
+                automáticamente las tarjetas.
+            -->
 
-                <img
-                    src="imagenes/OPTICA POST-03.jpg"
-                    alt="Colección Óptica Aqua"
-                >
+            <div class="productos"></div>
 
-            </div>
 
         </section>
 
 
-       <!-- =========================
-     CATÁLOGO
-     ========================= -->
-
-<section
-    id="catalogo"
-    class="seccion-catalogo"
->
-
-    <div class="cabecera-catalogo">
-
-        <div class="titulo-seccion">
-
-            <p class="subtitulo">
-                NUESTRA SELECCIÓN
-            </p>
-
-            <h2>
-                Armazones destacados
-            </h2>
-
-        </div>
-
-    </div>
-
-    <!--
-        JavaScript coloca aquí
-        automáticamente las tarjetas.
-    -->
-
-    <div class="productos"></div>
-
-    <div class="ver-todos">
-        <a href="catalogo.html">
-            Ver todos los armazones →
-        </a>
-    </div>
-
-</section>
+    </main>
 
 
-<!-- =========================
-     NOSOTROS
-     ========================= -->
-
-<section class="nosotros" id="nosotros">
-
-    <div class="nosotros-contenido">
-
-        <p class="nosotros-etiqueta">
-            ÓPTICA AQUA
-        </p>
-
-        <h2>
-            Ver bien también<br>
-            es sentirte bien.
-        </h2>
-
-        <p class="nosotros-texto">
-            En Óptica Aqua creemos que cuidar tu salud visual
-            también puede ser una experiencia cercana, sencilla
-            y con estilo.
-        </p>
-
-    </div>
-
-</section>
-
-</main>
     <!-- =========================
          PIE DE PÁGINA
          ========================= -->
