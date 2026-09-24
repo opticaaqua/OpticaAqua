@@ -1069,31 +1069,41 @@ if (seccionNosotros) {
 
     observarNosotros.observe(seccionNosotros);
 }
-/* =========================================
+/* =========================
    MENÚ MÓVIL
-========================================= */
+========================= */
 
-const botonMenu = document.querySelector("#abrir-menu");
-const botonCerrarMenu = document.querySelector("#cerrar-menu");
-const menuPrincipal = document.querySelector("#menu-principal");
+(() => {
 
-if (botonMenu && botonCerrarMenu && menuPrincipal) {
+    const btnMenuMovil = document.querySelector("#abrir-menu");
+    const navMenuMovil = document.querySelector("#menu-principal");
 
-    botonMenu.addEventListener("click", () => {
-        menuPrincipal.classList.add("abierto");
-        document.body.style.overflow = "hidden";
+    if (!btnMenuMovil || !navMenuMovil) return;
+
+    btnMenuMovil.addEventListener("click", () => {
+
+        const estaAbierto =
+            navMenuMovil.classList.toggle("menu-abierto");
+
+        btnMenuMovil.classList.toggle("activo", estaAbierto);
+
+        document.body.classList.toggle(
+            "menu-movil-abierto",
+            estaAbierto
+        );
+
     });
 
-    botonCerrarMenu.addEventListener("click", () => {
-        menuPrincipal.classList.remove("abierto");
-        document.body.style.overflow = "";
-    });
+    navMenuMovil.querySelectorAll("a").forEach((enlace) => {
 
-    menuPrincipal.querySelectorAll("a").forEach(enlace => {
         enlace.addEventListener("click", () => {
-            menuPrincipal.classList.remove("abierto");
-            document.body.style.overflow = "";
+
+            navMenuMovil.classList.remove("menu-abierto");
+            btnMenuMovil.classList.remove("activo");
+            document.body.classList.remove("menu-movil-abierto");
+
         });
+
     });
 
-}
+})();

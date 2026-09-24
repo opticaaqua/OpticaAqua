@@ -285,9 +285,12 @@ footer {
 
   /* HEADER MÓVIL */
 
+/* HEADER MÓVIL */
+
 .encabezado {
     position: sticky;
     top: 0;
+    z-index: 1000;
 
     display: grid;
     grid-template-columns: 1fr auto 1fr;
@@ -298,7 +301,6 @@ footer {
 }
 
 /* Logo centrado */
-
 .logo {
     grid-column: 2;
 }
@@ -307,21 +309,17 @@ footer {
     width: 115px;
 }
 
-/* Hamburguesa izquierda */
-
+/* Hamburguesa */
 .menu-hamburguesa {
-    display: flex;
     grid-column: 1;
     grid-row: 1;
 
-    width: 38px;
-    height: 38px;
-
-    padding: 8px 5px;
-
+    display: flex;
     flex-direction: column;
-    justify-content: center;
     gap: 5px;
+
+    width: 34px;
+    padding: 5px 0;
 
     background: transparent;
     border: none;
@@ -330,65 +328,27 @@ footer {
 
 .menu-hamburguesa span {
     display: block;
-    width: 26px;
+    width: 28px;
     height: 2px;
-    background-color: #202020;
-    border-radius: 10px;
+    background-color: #3b686f;
 }
 
-/* Buscar derecha */
-
+/* Buscar a la derecha */
 .acciones {
     grid-column: 3;
     grid-row: 1;
     justify-self: end;
+    margin-left: 0 !important;
 }
 
-body[data-pagina="catálogo"] .acciones {
-    margin-left: 0;
+.acciones button {
+    padding: 9px 16px;
+    font-size: 13px;
 }
 
-/* Menú móvil */
-
+/* Ocultamos el menú normal */
 .menu {
-    position: fixed;
-    inset: 0;
-
-    width: 100%;
-    height: 100vh;
-
-    background-color: white;
-
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-
-    padding: 100px 8% 40px;
-    gap: 0;
-
-    z-index: 2000;
-
-    transform: translateX(-100%);
-    transition: transform 0.35s ease;
-}
-
-/* Cuando se abre */
-
-.menu.abierto {
-    transform: translateX(0);
-}
-
-/* Enlaces */
-
-.menu a {
-    width: 100%;
-    padding: 18px 0;
-
-    font-size: 22px;
-    font-family: 'Poppins', sans-serif;
-
-    border-bottom: 1px solid #eeeeee;
+    display: none;
 }
 
 /* X para cerrar */
@@ -1215,5 +1175,565 @@ body[data-pagina="catálogo"] .acciones {
     .producto-info p {
         font-size: 13px;
         line-height: 1.3;
+    }
+}
+/* =========================================
+   HEADER MÓVIL - DEJAR AL FINAL DEL CSS
+   ========================================= */
+
+@media (max-width: 768px) {
+
+    .encabezado {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+
+        padding: 12px 5%;
+        gap: 0;
+    }
+
+    /* HAMBURGUESA */
+
+    .menu-hamburguesa {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 6px;
+
+        grid-column: 1;
+        grid-row: 1;
+        justify-self: start;
+
+        width: 36px;
+        padding: 6px 0;
+
+        background: transparent;
+        border: none;
+        cursor: pointer;
+    }
+
+    .menu-hamburguesa span {
+        display: block;
+        width: 28px;
+        height: 2px;
+        background-color: #3b686f;
+    }
+
+    /* LOGO */
+
+    .logo {
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: center;
+    }
+
+    .logo img {
+        width: 115px;
+    }
+
+    /* BUSCAR */
+
+    .acciones {
+        grid-column: 3;
+        grid-row: 1;
+        justify-self: end;
+        margin-left: 0 !important;
+    }
+
+    .acciones button {
+        padding: 9px 16px;
+        font-size: 13px;
+    }
+
+    /* MENÚ DE ESCRITORIO */
+
+    .menu {
+        display: none;
+    }
+}
+/* =========================
+   MENÚ MÓVIL ABIERTO
+========================= */
+
+.menu.abierto {
+    display: flex;
+
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100vh;
+
+    background-color: #f7f7f5;
+
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    padding: 120px 8% 40px;
+    gap: 0;
+
+    z-index: 2000;
+}
+
+/* Enlaces */
+
+.menu.abierto a {
+    display: block;
+    width: 100%;
+
+    padding: 20px 0;
+
+    font-size: 25px;
+    font-weight: 400;
+    color: #202020;
+
+    text-decoration: none;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+#menu-principal a {
+    width: 100%;
+    padding: 20px 0;
+
+    border-bottom: 1px solid rgba(59, 104, 111, 0.15);
+}
+#menu-principal a:last-child {
+    border-bottom: none;
+}
+
+/* Página actual */
+
+.menu.abierto a.activo {
+    color: #00bfae;
+    font-weight: 600;
+}
+
+/* X para cerrar */
+
+.menu.abierto .cerrar-menu {
+    display: block;
+
+    position: absolute;
+    top: 24px;
+    left: 8%;
+
+    padding: 0;
+
+    background: none;
+    border: none;
+
+    color: #3b686f;
+    font-size: 45px;
+    font-weight: 200;
+    line-height: 1;
+
+    cursor: pointer;
+}
+/* Logo dentro del menú abierto */
+
+.logo-menu-movil {
+    display: none;
+}
+
+.menu.abierto .logo-menu-movil {
+    display: block;
+
+    position: absolute;
+    top: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.menu.abierto .logo-menu-movil img {
+    display: block;
+    width: 115px;
+    height: auto;
+}
+/* Corregir posición de la X */
+
+.menu.abierto .cerrar-menu {
+    display: block !important;
+
+    position: absolute !important;
+    top: 24px !important;
+    left: 6% !important;
+    right: auto !important;
+
+    transform: none !important;
+
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+
+    background: transparent;
+    border: none;
+
+    font-size: 42px;
+    line-height: 1;
+    color: #3b686f;
+
+    z-index: 10;
+}
+/* =========================================
+   MENÚ MÓVIL DESLIZABLE
+========================================= */
+
+@media (max-width: 768px) {
+
+    /* HEADER SIEMPRE ENCIMA */
+    .encabezado {
+        position: sticky;
+        top: 0;
+        z-index: 2500;
+        background-color: white;
+    }
+
+
+    /* =========================
+       PANEL DEL MENÚ
+    ========================= */
+
+    #menu-principal {
+        display: flex;
+
+        position: fixed;
+
+        /* empieza debajo del header */
+        top: 65px;
+        left: 0;
+
+        width: 100%;
+        height: calc(100% - 65px);
+
+        flex-direction: column;
+        align-items: flex-start;
+
+        padding: 35px 6%;
+
+        background-color: #f7f7f5;
+
+        z-index: 2000;
+
+        /* escondido hacia la izquierda */
+        transform: translateX(-100%);
+
+        transition: transform 0.45s ease;
+    }
+
+
+    /* PANEL ABIERTO */
+
+    #menu-principal.menu-abierto {
+        transform: translateX(0);
+    }
+
+
+    /* BLOQUEAR SCROLL */
+
+    body.menu-movil-abierto {
+        overflow: hidden;
+    }
+
+
+    /* =========================
+       HAMBURGUESA
+    ========================= */
+
+    .menu-hamburguesa {
+        position: relative;
+        z-index: 2600;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        width: 34px;
+        height: 34px;
+
+        padding: 0;
+        gap: 7px;
+
+        background: transparent;
+        border: none;
+    }
+
+    .menu-hamburguesa span {
+        display: block;
+
+        width: 27px;
+        height: 2px;
+
+        background-color: #3b686f;
+
+        transform-origin: center;
+
+        transition: transform 0.35s ease;
+    }
+
+
+    /* =========================
+       DOS LÍNEAS → X
+    ========================= */
+
+    .menu-hamburguesa.activo {
+        gap: 0;
+    }
+
+    .menu-hamburguesa.activo span:first-child {
+        position: absolute;
+        transform: rotate(45deg);
+    }
+
+    .menu-hamburguesa.activo span:last-child {
+        position: absolute;
+        transform: rotate(-45deg);
+    }
+}
+/* =========================================
+   FICHA DE PRODUCTO - MÓVIL
+========================================= */
+
+@media (max-width: 768px) {
+
+    .modal-producto {
+        padding: 16px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal-contenido {
+    width: calc(100% - 32px) !important;
+    max-width: 420px !important;
+
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: 80vh !important;
+
+    margin: auto !important;
+    padding: 18px !important;
+
+    overflow-y: auto !important;
+
+    border-radius: 18px !important;
+}
+
+    .modal-interior {
+        display: block;
+    }
+
+
+    /* FOTO PRINCIPAL */
+
+    .modal-galeria {
+        width: 100%;
+    }
+
+    .modal-imagen {
+    width: 100% !important;
+    height: 180px !important;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 12px !important;
+    border-radius: 12px;
+}
+
+.modal-imagen img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain;
+}
+
+
+    /* INFORMACIÓN */
+
+   .modal-datos {
+    padding: 16px 0 0 !important;
+    margin: 0 !important;
+}
+
+.modal-datos h2 {
+    font-size: 22px !important;
+    margin: 2px 0 8px !important;
+}
+
+.modal-datos p {
+    margin: 6px 0 !important;
+}
+
+
+    /* VARIANTES */
+
+    .variantes-modal {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+
+        margin-top: 18px;
+    }
+
+    .boton-variante {
+        padding: 9px 15px;
+        font-size: 13px;
+    }
+
+
+    /* MINIATURAS */
+
+    .miniaturas-modal {
+        display: flex;
+        gap: 8px;
+
+        margin-top: 16px;
+    }
+
+    .miniaturas-modal img {
+        width: 62px;
+        height: 62px;
+
+        object-fit: contain;
+    }
+
+
+    /* DETALLE */
+
+    .detalle-variante {
+        margin-top: 18px;
+        font-size: 14px;
+    }
+
+}
+@media (max-width: 768px) {
+
+    .modal-producto {
+        padding: 12px !important;
+    }
+
+    .modal-contenido {
+        width: calc(100% - 24px) !important;
+        max-width: 380px !important;
+
+        height: auto !important;
+        min-height: 0 !important;
+        max-height: 82vh !important;
+
+        padding: 16px !important;
+        overflow-y: auto !important;
+    }
+
+    /* Quitar distribución gigante de escritorio */
+    .modal-interior {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 14px !important;
+
+        height: auto !important;
+        min-height: 0 !important;
+    }
+
+    .modal-galeria {
+        width: 100% !important;
+        height: auto !important;
+        min-height: 0 !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    /* FOTO MUCHO MÁS COMPACTA */
+    .modal-imagen {
+        width: 100% !important;
+        height: 155px !important;
+        min-height: 0 !important;
+
+        margin: 0 !important;
+        padding: 10px !important;
+    }
+
+    .modal-imagen img {
+        width: 100% !important;
+        height: 100% !important;
+        object-fit: contain !important;
+    }
+
+    /* DATOS INMEDIATAMENTE DEBAJO */
+    .modal-datos {
+        width: 100% !important;
+
+        margin: 0 !important;
+        padding: 0 !important;
+
+        min-height: 0 !important;
+    }
+
+    .modal-datos .subtitulo {
+        margin: 0 0 3px !important;
+        font-size: 12px !important;
+    }
+
+    .modal-datos h2 {
+        margin: 0 0 6px !important;
+        font-size: 21px !important;
+    }
+
+    .modal-datos > p {
+        margin: 4px 0 !important;
+        font-size: 14px !important;
+    }
+
+    .variantes-modal {
+        margin: 12px 0 0 !important;
+        gap: 6px !important;
+    }
+
+    .boton-variante {
+        padding: 8px 13px !important;
+        font-size: 12px !important;
+    }
+
+    .detalle-variante {
+        margin: 12px 0 0 !important;
+        padding: 0 !important;
+    }
+
+    .miniaturas-modal {
+        margin: 10px 0 !important;
+        gap: 7px !important;
+    }
+
+    .miniaturas-modal img {
+        width: 52px !important;
+        height: 52px !important;
+    }
+}
+.modal-imagen {
+    overflow: hidden !important;
+}
+
+.modal-imagen img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+
+    transform: scale(1.8);
+    transform-origin: center;
+}
+@media (max-width: 768px) {
+
+    body[data-pagina="catálogo"] .cabecera-catalogo {
+        text-align: center;
+    }
+
+    body[data-pagina="catálogo"] .titulo-seccion {
+        width: 100%;
+        text-align: center;
+    }
+
+    body[data-pagina="catálogo"] .titulo-seccion h2,
+    body[data-pagina="catálogo"] .titulo-seccion .subtitulo {
+        text-align: center;
     }
 }
