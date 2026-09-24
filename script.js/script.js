@@ -1107,3 +1107,152 @@ if (seccionNosotros) {
     });
 
 })();
+/* =========================
+   ZOOM INTERACTIVO PRODUCTO
+========================= */
+
+document.addEventListener("mousemove", (evento) => {
+
+    if (window.innerWidth <= 768) return;
+
+    const contenedor = evento.target.closest(".modal-imagen");
+
+    if (!contenedor) return;
+
+    const imagen = contenedor.querySelector("img");
+
+    if (!imagen) return;
+
+    const rect = contenedor.getBoundingClientRect();
+
+    const x =
+        ((evento.clientX - rect.left) / rect.width) * 100;
+
+    const y =
+        ((evento.clientY - rect.top) / rect.height) * 100;
+
+    imagen.style.transformOrigin = `${x}% ${y}%`;
+});
+
+
+document.addEventListener("mouseout", (evento) => {
+
+    const contenedor = evento.target.closest(".modal-imagen");
+
+    if (!contenedor) return;
+
+    if (contenedor.contains(evento.relatedTarget)) return;
+
+    const imagen = contenedor.querySelector("img");
+
+    if (imagen) {
+        imagen.style.transformOrigin = "50% 50%";
+    }
+
+});
+/* =========================
+   NOSOTROS - CARRUSEL
+========================= */
+
+(() => {
+
+    const carrusel = document.querySelector(".nosotros-carrusel");
+    const slides = document.querySelectorAll(".nosotros-slide");
+    const indicadores = document.querySelectorAll(".indicador");
+
+    const anterior = document.querySelector("#nosotros-anterior");
+    const siguiente = document.querySelector("#nosotros-siguiente");
+
+    if (
+        !carrusel ||
+        slides.length === 0 ||
+        !anterior ||
+        !siguiente
+    ) return;
+
+    let slideActual = 0;
+    let intervalo;
+const seccionNosotrosCarrusel = document.querySelector(".nosotros");
+
+const coloresNosotros = [
+    "#3b686f", // Presentación
+    "#287c82", // 11 años
+    "#315f70", // Salud visual
+    "#168f91"  // Sucursales
+];
+
+    function mostrarSlide(indice) {
+
+        slides[slideActual].classList.remove("activo");
+        indicadores[slideActual]?.classList.remove("activo");
+
+        slideActual = indice;
+
+        if (slideActual >= slides.length) {
+            slideActual = 0;
+        }
+
+        if (slideActual < 0) {
+            slideActual = slides.length - 1;
+        }
+
+       slides[slideActual].classList.add("activo");
+indicadores[slideActual]?.classList.add("activo");
+
+if (seccionNosotrosCarrusel) {
+    seccionNosotrosCarrusel.style.backgroundColor =
+        coloresNosotros[slideActual];
+}
+
+    }
+    function iniciarCarrusel() {
+
+        clearInterval(intervalo);
+
+        intervalo = setInterval(() => {
+            mostrarSlide(slideActual + 1);
+        }, 5000);
+    }
+
+
+    /* FLECHAS */
+
+    siguiente.addEventListener("click", () => {
+        mostrarSlide(slideActual + 1);
+        iniciarCarrusel();
+    });
+
+    anterior.addEventListener("click", () => {
+        mostrarSlide(slideActual - 1);
+        iniciarCarrusel();
+    });
+
+
+    /* INDICADORES */
+
+    indicadores.forEach((indicador, indice) => {
+
+        indicador.addEventListener("click", () => {
+            mostrarSlide(indice);
+            iniciarCarrusel();
+        });
+
+    });
+
+
+    /* PAUSAR AL PONER EL CURSOR */
+
+    carrusel.addEventListener("mouseenter", () => {
+        clearInterval(intervalo);
+    });
+
+    carrusel.addEventListener("mouseleave", () => {
+        iniciarCarrusel();
+    });
+
+
+    /* INICIAR */
+
+    iniciarCarrusel();
+
+})();
