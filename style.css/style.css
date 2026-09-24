@@ -250,7 +250,7 @@ body[data-pagina="inicio"] .seccion-catalogo {
 
 /* PÁGINA COMPLETA DE CATÁLOGO */
 body[data-pagina="catálogo"] .seccion-catalogo {
-    padding: 100px 6%;
+    padding: 55px 6% 100px;
 
     background: linear-gradient(
         to bottom,
@@ -283,27 +283,131 @@ footer {
 
 @media (max-width: 768px) {
 
-    .encabezado {
-    padding: 10px 5% 14px;
-    flex-wrap: wrap;
-    gap: 10px;
+  /* HEADER MÓVIL */
+
+.encabezado {
+    position: sticky;
+    top: 0;
+
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+
+    padding: 12px 5%;
+    gap: 0;
 }
 
-   .logo img {
-    width: 100px;
+/* Logo centrado */
+
+.logo {
+    grid-column: 2;
 }
 
-    .menu {
-    order: 3;
-    width: 100%;
+.logo img {
+    width: 115px;
+}
+
+/* Hamburguesa izquierda */
+
+.menu-hamburguesa {
+    display: flex;
+    grid-column: 1;
+    grid-row: 1;
+
+    width: 38px;
+    height: 38px;
+
+    padding: 8px 5px;
+
+    flex-direction: column;
     justify-content: center;
-    gap: 16px;
-    margin-top: -6px;
+    gap: 5px;
+
+    background: transparent;
+    border: none;
+    cursor: pointer;
 }
 
-    .menu a {
-        font-size: 13px;
-    }
+.menu-hamburguesa span {
+    display: block;
+    width: 26px;
+    height: 2px;
+    background-color: #202020;
+    border-radius: 10px;
+}
+
+/* Buscar derecha */
+
+.acciones {
+    grid-column: 3;
+    grid-row: 1;
+    justify-self: end;
+}
+
+body[data-pagina="catálogo"] .acciones {
+    margin-left: 0;
+}
+
+/* Menú móvil */
+
+.menu {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100vh;
+
+    background-color: white;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+
+    padding: 100px 8% 40px;
+    gap: 0;
+
+    z-index: 2000;
+
+    transform: translateX(-100%);
+    transition: transform 0.35s ease;
+}
+
+/* Cuando se abre */
+
+.menu.abierto {
+    transform: translateX(0);
+}
+
+/* Enlaces */
+
+.menu a {
+    width: 100%;
+    padding: 18px 0;
+
+    font-size: 22px;
+    font-family: 'Poppins', sans-serif;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+/* X para cerrar */
+
+.cerrar-menu {
+    display: block;
+
+    position: absolute;
+    top: 22px;
+    right: 7%;
+
+    background: transparent;
+    border: none;
+
+    font-size: 34px;
+    font-weight: 300;
+
+    cursor: pointer;
+}
 
     .hero {
         grid-template-columns: 1fr;
@@ -1071,4 +1175,45 @@ footer {
 #abrir-filtros-catalogo {
     margin: 0;
     flex-shrink: 0;
+}
+/* CONTROLES DEL MENÚ MÓVIL */
+
+.menu-hamburguesa,
+.cerrar-menu {
+    display: none;
+}
+/* AJUSTES FINALES PARA CELULAR */
+@media (max-width: 768px) {
+
+    /* Menos espacio arriba del catálogo */
+    body[data-pagina="catálogo"] .seccion-catalogo {
+        padding: 30px 6% 60px;
+    }
+
+    /* Dos tarjetas por fila */
+    .productos {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    /* Tarjetas más compactas */
+    .producto-imagen {
+        height: 165px;
+        padding: 12px;
+    }
+
+    .producto-info {
+        padding: 15px;
+    }
+
+    .producto-info h3 {
+        font-size: 15px;
+        line-height: 1.2;
+        margin-bottom: 6px;
+    }
+
+    .producto-info p {
+        font-size: 13px;
+        line-height: 1.3;
+    }
 }

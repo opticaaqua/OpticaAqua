@@ -1069,3 +1069,31 @@ if (seccionNosotros) {
 
     observarNosotros.observe(seccionNosotros);
 }
+/* =========================================
+   MENÚ MÓVIL
+========================================= */
+
+const botonMenu = document.querySelector("#abrir-menu");
+const botonCerrarMenu = document.querySelector("#cerrar-menu");
+const menuPrincipal = document.querySelector("#menu-principal");
+
+if (botonMenu && botonCerrarMenu && menuPrincipal) {
+
+    botonMenu.addEventListener("click", () => {
+        menuPrincipal.classList.add("abierto");
+        document.body.style.overflow = "hidden";
+    });
+
+    botonCerrarMenu.addEventListener("click", () => {
+        menuPrincipal.classList.remove("abierto");
+        document.body.style.overflow = "";
+    });
+
+    menuPrincipal.querySelectorAll("a").forEach(enlace => {
+        enlace.addEventListener("click", () => {
+            menuPrincipal.classList.remove("abierto");
+            document.body.style.overflow = "";
+        });
+    });
+
+}

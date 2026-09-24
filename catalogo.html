@@ -34,24 +34,34 @@
 
     <header class="encabezado">
 
-        <div class="logo">
-            <img src="imagenes/Aqua Logo.png" alt="Óptica Aqua">
-        </div>
+    <button class="menu-hamburguesa" id="abrir-menu" aria-label="Abrir menú">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
 
-<nav class="menu">
-    <a href="index.html">Inicio</a>
-  <a href="catalogo.html" class="activo">Catálogo</a>
-    <a href="index.html#nosotros">Nosotros</a>
-    <a href="index.html#contacto">Contacto</a>
-</nav>
+    <div class="logo">
+        <img src="imagenes/Aqua Logo.png" alt="Óptica Aqua">
+    </div>
 
-        <div class="acciones">
-            <button id="abrir-filtros">
-                Buscar
-            </button>
-        </div>
+    <nav class="menu" id="menu-principal">
 
-    </header>
+        <button class="cerrar-menu" id="cerrar-menu" aria-label="Cerrar menú">
+            ×
+        </button>
+
+        <a href="index.html">Inicio</a>
+        <a href="catalogo.html" class="activo">Catálogo</a>
+        <a href="index.html#nosotros">Nosotros</a>
+        <a href="index.html#contacto">Contacto</a>
+
+    </nav>
+
+    <div class="acciones">
+        <button id="abrir-filtros">Buscar</button>
+    </div>
+
+</header>
 
 
     <!-- =========================
