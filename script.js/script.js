@@ -1256,3 +1256,89 @@ if (seccionNosotrosCarrusel) {
     iniciarCarrusel();
 
 })();
+/* =========================
+   CONTACTO - WHATSAPP
+========================= */
+
+const formularioContacto = document.querySelector("#formulario-contacto");
+
+if (formularioContacto) {
+
+    formularioContacto.addEventListener("submit", (evento) => {
+
+        evento.preventDefault();
+
+        const nombre = document.querySelector("#contacto-nombre").value;
+        const ciudad = document.querySelector("#contacto-ciudad").value;
+        const correo = document.querySelector("#contacto-correo").value;
+        const mensaje = document.querySelector("#contacto-mensaje").value;
+
+        const numeroWhatsApp = "529211024546";
+
+        const textoWhatsApp =
+`Hola, soy ${nombre}.
+
+Les escribo desde ${ciudad}.
+
+${mensaje}
+
+Correo de contacto: ${correo || "No proporcionado"}`;
+
+        const enlaceWhatsApp =
+            `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(textoWhatsApp)}`;
+
+        window.open(enlaceWhatsApp, "_blank");
+
+    });
+
+}
+/* =========================
+   MENÚ ACTIVO SEGÚN SECCIÓN
+========================= */
+
+(() => {
+
+    const enlacesMenu = document.querySelectorAll(
+        '#menu-principal a[href^="#"]'
+    );
+
+    const secciones = [
+        document.querySelector("#inicio"),
+        document.querySelector("#nosotros"),
+        document.querySelector("#contacto")
+    ].filter(Boolean);
+
+    if (enlacesMenu.length === 0 || secciones.length === 0) return;
+
+
+    function actualizarMenu() {
+
+        const posicion = window.scrollY + 180;
+        let seccionActual = "inicio";
+
+        secciones.forEach((seccion) => {
+            if (posicion >= seccion.offsetTop) {
+                seccionActual = seccion.id;
+            }
+        });
+
+
+        enlacesMenu.forEach((enlace) => {
+
+            const destino = enlace.getAttribute("href");
+
+            enlace.classList.toggle(
+                "activo",
+                destino === `#${seccionActual}`
+            );
+
+        });
+
+    }
+
+
+    window.addEventListener("scroll", actualizarMenu);
+
+    actualizarMenu();
+
+})();

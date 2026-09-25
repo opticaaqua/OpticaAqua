@@ -1824,3 +1824,1053 @@ footer {
     position: relative;
     z-index: 0;
 }
+.nosotros {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+/* =========================
+   NOSOTROS - CARRUSEL
+========================= */
+
+.nosotros {
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+.nosotros-carrusel {
+    position: relative;
+    width: 100%;
+    min-height: 485px;
+}
+
+.nosotros-slide {
+    position: absolute;
+    inset: 0;
+
+    display: grid;
+    grid-template-columns: 58% 42%;
+    align-items: stretch;
+
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(30px);
+
+    transition:
+        opacity 0.55s ease,
+        transform 0.55s ease,
+        visibility 0.55s;
+}
+
+.nosotros-slide.activo {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
+
+.nosotros-slide .nosotros-contenido {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    padding: 70px 8%;
+    margin: 0;
+    max-width: none;
+}
+
+.nosotros-imagen {
+    width: 100%;
+    height: 100%;
+    min-height: 485px;
+
+    background-color: rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+}
+
+.nosotros-imagen img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.nosotros-controles {
+    position: absolute;
+    left: 4.6%;
+    right: 4.6%;
+    bottom: 28px;
+
+    z-index: 10;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nosotros-indicadores {
+    display: flex;
+    gap: 8px;
+}
+
+.indicador {
+    width: 8px;
+    height: 8px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.35);
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.indicador.activo {
+    width: 24px;
+    border-radius: 20px;
+    background-color: white;
+}
+
+.nosotros-flechas {
+    display: flex;
+    gap: 8px;
+}
+
+.nosotros-flechas button {
+    width: 42px;
+    height: 42px;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 50%;
+    background: transparent;
+    color: white;
+    font-size: 18px;
+    cursor: pointer;
+    transition: 0.3s ease;
+}
+
+.nosotros-flechas button:hover {
+    background-color: white;
+    color: #3b686f;
+}
+
+@media (max-width: 768px) {
+
+    .nosotros-carrusel {
+        min-height: 620px;
+    }
+
+    .nosotros-slide {
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 220px;
+    }
+
+    .nosotros-slide .nosotros-contenido {
+        padding: 45px 28px 75px;
+    }
+
+    .nosotros-imagen {
+        min-height: 220px;
+    }
+
+    .nosotros-controles {
+        left: 28px;
+        right: 28px;
+        bottom: 245px;
+    }
+
+    .nosotros-flechas button {
+        width: 38px;
+        height: 38px;
+    }
+}
+/* =========================
+   CONTACTO
+========================= */
+
+.contacto {
+    width: calc(100% - 12%);
+    max-width: 1400px;
+    margin: 110px auto;
+
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: 100px;
+    align-items: start;
+}
+
+/* TEXTO */
+
+.contacto-intro {
+    padding-top: 15px;
+}
+
+.contacto-etiqueta {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    color: #00b69e;
+    margin-bottom: 18px;
+}
+
+.contacto h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(42px, 5vw, 68px);
+    line-height: 1.05;
+    font-weight: 500;
+    color: #202020;
+    margin-bottom: 28px;
+}
+
+.contacto-texto {
+    max-width: 500px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    line-height: 1.8;
+    color: #6b6b6b;
+}
+
+
+/* FORMULARIO */
+
+.contacto-formulario {
+    background-color: #ffffff;
+    padding: 45px;
+    border-radius: 18px;
+    box-shadow: 0 15px 45px rgba(0, 0, 0, 0.06);
+}
+
+#formulario-contacto {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+
+/* CAMPOS */
+
+.campo-contacto {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.campo-contacto label {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    color: #202020;
+}
+
+.campo-contacto input,
+.campo-contacto select,
+.campo-contacto textarea {
+    width: 100%;
+    padding: 14px 0;
+
+    border: none;
+    border-bottom: 1px solid #d8d8d8;
+
+    background-color: transparent;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 15px;
+    color: #202020;
+
+    outline: none;
+
+    transition: border-color 0.25s ease;
+}
+
+.campo-contacto textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+
+/* CAMPO ACTIVO */
+
+.campo-contacto input:focus,
+.campo-contacto select:focus,
+.campo-contacto textarea:focus {
+    border-bottom-color: #00b69e;
+}
+
+
+/* BOTÓN */
+
+.boton-contacto {
+    align-self: flex-start;
+
+    margin-top: 10px;
+    padding: 14px 28px;
+
+    border: none;
+    border-radius: 50px;
+
+    background-color: #3b686f;
+    color: white;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.25s ease,
+        background-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.boton-contacto:hover {
+    background-color: #2f565c;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(59, 104, 111, 0.20);
+}
+
+
+/* =========================
+   CONTACTO - CELULAR
+========================= */
+
+@media (max-width: 768px) {
+
+    .contacto {
+        width: calc(100% - 12%);
+        margin: 75px auto;
+
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+
+    .contacto h2 {
+        font-size: 40px;
+    }
+
+    .contacto-formulario {
+        padding: 28px 22px;
+    }
+
+    .boton-contacto {
+        width: 100%;
+    }
+
+}
+/* =========================
+   QUITAR RESALTADO AZUL EN MÓVIL
+========================= */
+
+button,
+a,
+.tarjeta-producto,
+.categoria,
+.menu-hamburguesa,
+.indicador,
+.nosotros-flechas button {
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Elementos de interfaz que no necesitan seleccionarse como texto */
+button,
+a,
+.menu-hamburguesa,
+.categoria,
+.indicador,
+.nosotros-flechas button {
+    -webkit-user-select: none;
+    user-select: none;
+}
+/* =========================================
+   NOSOTROS - RESPONSIVE MÓVIL CORREGIDO
+========================================= */
+
+@media (max-width: 768px) {
+
+    /* CUADRO COMPLETO */
+    .nosotros {
+        width: calc(100% - 24px) !important;
+        max-width: none !important;
+
+        margin: 45px 12px 55px !important;
+        padding: 0 !important;
+
+        border-radius: 16px;
+        overflow: hidden;
+
+        box-sizing: border-box;
+    }
+
+
+    /* CONTENEDOR DEL CARRUSEL */
+    .nosotros-carrusel {
+        position: relative;
+
+        width: 100% !important;
+        max-width: 100% !important;
+
+        min-height: 600px;
+        overflow: hidden;
+    }
+
+
+    /* CADA DIAPOSITIVA */
+    .nosotros-slide {
+        position: absolute;
+        inset: 0;
+
+        width: 100% !important;
+        max-width: 100% !important;
+
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) !important;
+      grid-template-rows: 285px auto !important;
+
+        overflow: hidden;
+    }
+
+
+    /* TEXTO */
+    .nosotros-slide .nosotros-contenido {
+        width: 100% !important;
+        max-width: 100% !important;
+
+        padding: 35px 24px 65px !important;
+        margin: 0 !important;
+
+        box-sizing: border-box;
+    }
+
+    .nosotros-etiqueta {
+        font-size: 10px;
+        letter-spacing: 2px;
+        margin-bottom: 12px;
+    }
+
+    .nosotros h2 {
+        font-size: 30px;
+        line-height: 1.05;
+        margin-bottom: 16px;
+    }
+
+    .nosotros-texto {
+        width: 100%;
+        max-width: 100%;
+
+        font-size: 13px;
+        line-height: 1.55;
+    }
+
+
+    /* FOTO */
+    .nosotros-imagen {
+        width: 100% !important;
+        max-width: 100% !important;
+
+        height: 300px !important;
+        min-height: 0 !important;
+
+        overflow: hidden;
+    }
+
+    .nosotros-imagen img {
+        display: block;
+
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 100% !important;
+
+        object-fit: contain;
+    }
+
+
+    /* CONTROLES */
+    .nosotros-controles {
+        left: 24px !important;
+        right: 24px !important;
+        bottom: 318px !important;
+    }
+
+}
+/* =========================================
+   NOSOTROS - MÓVIL FINAL
+========================================= */
+
+@media (max-width: 768px) {
+
+    .nosotros {
+        width: calc(100% - 24px) !important;
+        max-width: none !important;
+
+        margin: 45px 12px 55px !important;
+        padding: 0 !important;
+
+        border-radius: 16px;
+        overflow: hidden;
+    }
+
+
+    /* CARRUSEL */
+
+    .nosotros-carrusel {
+        position: relative;
+        width: 100% !important;
+
+        min-height: 0 !important;
+        height: auto !important;
+
+        overflow: hidden;
+    }
+
+
+    /* En móvil el slide activo vuelve al flujo normal */
+
+    .nosotros-slide {
+        position: relative !important;
+        inset: auto !important;
+
+        width: 100% !important;
+
+        display: none !important;
+        grid-template-columns: 1fr !important;
+        grid-template-rows: auto auto !important;
+
+        transform: none !important;
+    }
+
+    .nosotros-slide.activo {
+        display: grid !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+
+    /* TEXTO */
+
+    .nosotros-slide .nosotros-contenido {
+        width: 100% !important;
+        max-width: none !important;
+
+        padding: 38px 28px 28px !important;
+        margin: 0 !important;
+
+        box-sizing: border-box;
+    }
+
+    .nosotros-etiqueta {
+        font-size: 10px;
+        letter-spacing: 2px;
+        margin-bottom: 14px;
+    }
+
+    .nosotros h2 {
+        font-size: 34px;
+        line-height: 1.05;
+        margin-bottom: 18px;
+    }
+
+    .nosotros-texto {
+        width: 100%;
+        max-width: none;
+
+        font-size: 13px;
+        line-height: 1.55;
+    }
+
+
+    /* FOTO */
+
+   @media (max-width: 768px) {
+
+    .nosotros-imagen {
+        width: 88% !important;
+        height: auto !important;
+
+        margin: 8px auto 12px !important;
+
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+}
+    .nosotros-imagen img {
+        display: block;
+
+        width: 100% !important;
+        height: auto !important;
+
+        object-fit: initial !important;
+        object-position: initial !important;
+
+        border-radius: 12px;
+    }
+
+
+    /* CONTROLES */
+
+    .nosotros-controles {
+        position: relative !important;
+
+        left: auto !important;
+        right: auto !important;
+        bottom: auto !important;
+
+        width: 100%;
+
+        padding: 4px 28px 24px;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+}
+
+/* =========================
+   AJUSTE SCROLL DE SECCIONES
+========================= */
+
+#inicio,
+#nosotros,
+#contacto {
+    scroll-margin-top: 95px;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+@media (max-width: 768px) {
+
+    #inicio,
+    #nosotros,
+    #contacto {
+        scroll-margin-top: 80px;
+    }
+
+}
+/* =========================
+   FOOTER AQUA
+========================= */
+
+.footer-aqua {
+    background-color: #182326;
+    color: #ffffff;
+
+    padding: 52px 6% 22px;
+}
+
+.footer-contenido {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: 1fr 1.35fr 0.65fr;
+    gap: 45px;
+}
+
+
+/* MARCA */
+
+.footer-logo {
+    width: 165px;
+    height: auto;
+    margin-bottom: 22px;
+
+    filter: brightness(0) invert(1);
+    opacity: 0.95;
+}
+
+.footer-marca p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    line-height: 1.7;
+
+    color: rgba(255, 255, 255, 0.65);
+}
+
+
+/* TÍTULOS */
+
+.footer-columna h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+
+    letter-spacing: 2px;
+    text-transform: uppercase;
+
+    color: #9cf3f3;
+
+    margin-bottom: 25px;
+}
+
+
+/* SUCURSALES */
+
+.footer-sucursal {
+    margin-bottom: 28px;
+}
+
+.footer-sucursal:last-child {
+    margin-bottom: 0;
+}
+
+.footer-sucursal-nombre {
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+
+    margin-bottom: 10px;
+}
+
+.footer-sucursal a {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+
+    width: fit-content;
+
+    margin: 7px 0;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+
+    color: rgba(255, 255, 255, 0.68);
+    text-decoration: none;
+
+    transition: color 0.2s ease;
+}
+
+.footer-sucursal a:hover {
+    color: #9cf3f3;
+}
+
+.footer-icono {
+    color: #9cf3f3;
+    flex-shrink: 0;
+}
+
+
+/* REDES */
+
+.footer-redes {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer-redes a {
+    width: fit-content;
+
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+
+    color: rgba(255, 255, 255, 0.75);
+    text-decoration: none;
+
+    transition:
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.footer-redes a:hover {
+    color: #9cf3f3;
+    transform: translateX(4px);
+}
+
+
+/* PARTE INFERIOR */
+
+.footer-inferior {
+    width: 100%;
+    max-width: 1100px;
+
+   margin: 38px auto 0;
+padding-top: 18px;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.footer-inferior p {
+    font-family: 'Poppins', sans-serif;
+    font-size: 11px;
+
+    color: rgba(255, 255, 255, 0.4);
+}
+
+
+/* =========================
+   FOOTER - MÓVIL
+========================= */
+
+@media (max-width: 768px) {
+
+    .footer-aqua {
+        padding: 55px 28px 25px;
+    }
+
+    .footer-contenido {
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+
+    display: grid;
+    grid-template-columns: 1fr 1.35fr 0.65fr;
+    gap: 55px;
+}
+
+    .footer-logo {
+        width: 125px;
+    }
+
+    .footer-columna h3 {
+        margin-bottom: 20px;
+    }
+
+    .footer-sucursal {
+        margin-bottom: 24px;
+    }
+
+    .footer-inferior {
+        margin-top: 45px;
+
+        flex-direction: column;
+        gap: 7px;
+    }
+
+}
+.footer-redes a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.footer-red-icon {
+    width: 19px;
+    height: 19px;
+    flex: 0 0 19px;
+
+    color: #9cf3f3;
+}
+
+.footer-red-icon svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Facebook necesita relleno para verse mejor */
+.footer-redes a:nth-child(2) .footer-red-icon svg {
+    fill: currentColor;
+    stroke: none;
+}
+.footer-icono-ubicacion {
+    width: 18px;
+    height: 18px;
+    flex-basis: 18px;
+}
+.footer-icono-ubicacion {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+}
+/* UNIFICAR COLOR DE ICONOS DEL FOOTER */
+
+.footer-icono,
+.footer-icono-ubicacion,
+.footer-red-icon {
+    color: #9cf3f3 !important;
+}
+
+.footer-icono svg,
+.footer-icono-ubicacion svg {
+    width: 100%;
+    height: 100%;
+
+    fill: none !important;
+    stroke: #9cf3f3 !important;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Pin de ubicación */
+.footer-icono-ubicacion svg path {
+    fill: none !important;
+    stroke: #9cf3f3 !important;
+}
+
+.footer-icono-ubicacion svg circle {
+    fill: none !important;
+    stroke: #9cf3f3 !important;
+}
+.footer-sucursal a[href^="tel:"] {
+    font-family: 'Poppins', sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    line-height: 1.5 !important;
+
+    color: rgba(255, 255, 255, 0.68) !important;
+}
+.footer-sucursal a[href^="tel:"]:hover {
+    color: #9cf3f3 !important;
+}
+/* =========================
+   FOOTER AQUA - MÓVIL
+========================= */
+
+@media (max-width: 768px) {
+
+    .footer-aqua {
+        padding: 45px 28px 25px !important;
+    }
+
+    .footer-contenido {
+        width: 100% !important;
+        max-width: none !important;
+
+        display: flex !important;
+        flex-direction: column !important;
+
+        gap: 38px !important;
+    }
+
+
+    /* MARCA */
+
+    .footer-marca {
+        width: 100%;
+    }
+
+    .footer-logo {
+        width: 150px !important;
+        margin-bottom: 18px;
+    }
+
+    .footer-marca p {
+        font-size: 14px;
+        line-height: 1.65;
+
+        max-width: 280px;
+    }
+
+
+    /* COLUMNAS */
+
+    .footer-columna {
+        width: 100% !important;
+    }
+
+    .footer-columna h3 {
+        font-size: 12px;
+        margin-bottom: 22px;
+    }
+
+
+    /* SUCURSALES */
+
+    .footer-sucursal {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+    .footer-sucursal-nombre {
+        font-size: 17px;
+        margin-bottom: 10px;
+    }
+
+    .footer-sucursal a {
+        width: 100%;
+        max-width: 100%;
+
+        font-size: 14px;
+        line-height: 1.55;
+
+        margin: 8px 0;
+
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .footer-icono,
+    .footer-icono-ubicacion {
+        width: 18px;
+        height: 18px;
+        flex: 0 0 18px;
+        margin-top: 2px;
+    }
+
+
+    /* REDES */
+
+    .footer-redes {
+        gap: 15px;
+    }
+
+    .footer-redes a {
+        width: fit-content !important;
+        font-size: 15px;
+    }
+
+
+    /* PARTE INFERIOR */
+
+    .footer-inferior {
+        width: 100%;
+        max-width: none;
+
+        margin: 38px 0 0 !important;
+        padding-top: 20px;
+
+        flex-direction: column;
+        gap: 6px;
+    }
+/* CENTRAR FOOTER EN MÓVIL */
+
+.footer-marca,
+.footer-columna {
+    text-align: center;
+}
+
+.footer-logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footer-marca p {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.footer-sucursal a {
+    width: fit-content !important;
+    margin-left: auto;
+    margin-right: auto;
+    justify-content: center;
+    text-align: center;
+}
+
+.footer-redes {
+    align-items: center;
+}
+
+.footer-inferior {
+    align-items: center;
+    text-align: center;
+}
+}
