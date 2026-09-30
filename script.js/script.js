@@ -1357,3 +1357,90 @@ Correo de contacto: ${correo || "No proporcionado"}`;
     actualizarMenu();
 
 })();
+// =========================
+// MODAL SOLICITAR CITA
+// =========================
+
+const abrirCita = document.getElementById("abrirCita");
+const cerrarCita = document.getElementById("cerrarCita");
+const modalCita = document.getElementById("modalCita");
+
+abrirCita.addEventListener("click", () => {
+    modalCita.classList.add("activo");
+});
+
+cerrarCita.addEventListener("click", () => {
+    modalCita.classList.remove("activo");
+});
+
+// Cerrar al tocar fuera de la tarjeta
+modalCita.addEventListener("click", (e) => {
+    if (e.target === modalCita) {
+        modalCita.classList.remove("activo");
+    }
+});
+// =========================
+// SOLICITAR CITA POR WHATSAPP
+// =========================
+
+const formCita = document.getElementById("formCita");
+
+formCita.addEventListener("submit", (evento) => {
+
+    evento.preventDefault();
+
+    const nombre =
+        document.getElementById("nombreCita").value;
+
+    const telefono =
+        document.getElementById("telefonoCita").value;
+
+    const sucursal =
+        document.getElementById("sucursalCita").value;
+
+    const fecha =
+        document.getElementById("fechaCita").value;
+
+    const hora =
+        document.getElementById("horaCita").value;
+
+
+    // WhatsApp según sucursal
+    let numeroWhatsApp = "";
+
+    if (sucursal === "Divertiplaza") {
+        numeroWhatsApp = "522293717058";
+    }
+
+    if (sucursal === "Plaza Santa Ana") {
+        numeroWhatsApp = "529211024546";
+    }
+
+
+    // Convertir fecha a formato más bonito
+    const fechaPartes = fecha.split("-");
+
+    const fechaBonita =
+        `${fechaPartes[2]}/${fechaPartes[1]}/${fechaPartes[0]}`;
+
+
+    // Mensaje para WhatsApp
+    const mensaje =
+`Hola, me gustaría solicitar una cita en Óptica Aqua 😊
+
+Nombre: ${nombre}
+Teléfono: ${telefono}
+Sucursal: ${sucursal}
+Fecha deseada: ${fechaBonita}
+Hora deseada: ${hora}
+
+¿Tienen disponibilidad en ese horario?`;
+
+
+    const enlaceWhatsApp =
+        `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
+
+
+    window.open(enlaceWhatsApp, "_blank");
+
+});

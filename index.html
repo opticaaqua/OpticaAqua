@@ -225,6 +225,9 @@
                 <a href="#catalogo" class="boton">
                     Explorar catálogo
                 </a>
+                <button class="boton-cita" id="abrirCita">
+    Solicitar cita
+</button>
 
             </div>
 
@@ -693,12 +696,82 @@
 
 </footer>
 
+<!-- MODAL SOLICITAR CITA -->
+<div class="modal-cita" id="modalCita">
 
-    <!-- JAVASCRIPT -->
+    <div class="tarjeta-cita">
+
+        <button class="cerrar-cita" id="cerrarCita">×</button>
+
+        <h2>Solicita tu cita</h2>
+
+        <p class="texto-cita">
+            Elige el día y horario en el que te gustaría visitarnos.
+            Nuestro equipo confirmará la disponibilidad por WhatsApp.
+        </p>
+<form id="formCita">
+
+    <div class="campo-cita">
+        <label for="nombreCita">Nombre</label>
+        <input
+            type="text"
+            id="nombreCita"
+            required
+            placeholder="Tu nombre"
+        >
+    </div>
+
+    <div class="campo-cita">
+        <label for="telefonoCita">Teléfono</label>
+        <input
+            type="tel"
+            id="telefonoCita"
+            required
+            placeholder="Tu número de teléfono"
+        >
+    </div>
+
+    <div class="campo-cita">
+        <label for="sucursalCita">Sucursal</label>
+        <select id="sucursalCita" required>
+            <option value="">Selecciona una sucursal</option>
+            <option value="Divertiplaza">Divertiplaza</option>
+            <option value="Plaza Santa Ana">Plaza Santa Ana</option>
+        </select>
+    </div>
+
+    <div class="campo-cita">
+        <label for="fechaCita">¿Qué día te gustaría visitarnos?</label>
+        <input
+            type="date"
+            id="fechaCita"
+            required
+        >
+    </div>
+
+    <div class="campo-cita">
+        <label for="horaCita">¿A qué hora te gustaría acudir?</label>
+        <input
+            type="time"
+            id="horaCita"
+            required
+        >
+    </div>
+
+    <button type="submit" class="enviar-cita">
+        Consultar disponibilidad por WhatsApp
+    </button>
+
+</form>
+
+    </div>
+
+</div>
+
+ <!-- JAVASCRIPT -->
 
 <script src="script.js/inventario.js"></script>
 <script src="script.js/script.js"></script>
-
 </body>
 
 </html>
