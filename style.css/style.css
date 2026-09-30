@@ -2874,3 +2874,19 @@ padding-top: 18px;
     text-align: center;
 }
 }
+.credito-web {
+    margin: 0;
+    font-size: 12px;
+    opacity: 1;
+    text-align: right;
+}
+
+.credito-web a {
+    color: #ffffff;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.credito-web a:hover {
+    color: #6fe7e0;
+}
