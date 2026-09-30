@@ -49,14 +49,21 @@ function normalizar(texto) {
    DETECTAR COLORES
 ===================================================== */
 
-function obtenerColores(caracteristicas) {
+function obtenerColores(caracteristicas, colorDefinido) {
 
+    // Si el producto tiene un color definido manualmente,
+    // usamos ese como una sola variante de color.
+    if (colorDefinido) {
+        return [colorDefinido];
+    }
+
+    // Productos antiguos sin campo "color":
+    // siguen funcionando como hasta ahora.
     const texto = normalizar(caracteristicas);
 
     return coloresConocidos.filter(color =>
         texto.includes(normalizar(color))
     );
-
 }
 
 
@@ -94,7 +101,6 @@ function obtenerMaterial(caracteristicas) {
 /* =====================================================
    AGRUPAR PRODUCTOS
 ===================================================== */
-
 function agruparProductos(inventario) {
 
     const grupos = {};
@@ -107,14 +113,18 @@ function agruparProductos(inventario) {
         if (!grupos[clave]) {
 
             grupos[clave] = {
-    marca: item.marca,
-    modelo: item.modelo,
-    destacado: false,
-    variantes: []
-};
-if (item.destacado === true) {
-    grupos[clave].destacado = true;
-}
+                marca: item.marca,
+                modelo: item.modelo,
+                destacado: false,
+                variantes: []
+            };
+
+        }
+
+        // Si CUALQUIER variante está destacada,
+        // todo el producto queda destacado
+        if (item.destacado === true) {
+            grupos[clave].destacado = true;
         }
 
         grupos[clave].variantes.push({
@@ -122,7 +132,7 @@ if (item.destacado === true) {
             caracteristicas: item.caracteristicas,
 
             colores:
-                obtenerColores(item.caracteristicas),
+                obtenerColores(item.caracteristicas, item.color),
 
             materiales:
                 obtenerMaterial(item.caracteristicas),
@@ -131,7 +141,7 @@ if (item.destacado === true) {
                 item.cantidad,
 
             categorias:
-    item.categorias || [],
+                item.categorias || [],
 
             precio:
                 item.precio,
@@ -146,7 +156,6 @@ if (item.destacado === true) {
     return Object.values(grupos);
 
 }
-
 
 const productos = agruparProductos(inventario);
 function prioridadProducto(producto) {
@@ -777,16 +786,22 @@ function aplicarFiltros() {
 
 
             const coincideColor =
-                color === "" ||
+    color === "" ||
 
-                producto.variantes.some(
-                    variante =>
-                        variante.colores.some(
-                            item =>
-                                normalizar(item)
-                                    .includes(color)
-                        )
-                );
+    producto.variantes.some(
+        variante =>
+            variante.colores.some(
+                item => {
+                    const colorVariante = normalizar(item);
+
+                    return colorVariante
+                        .split(/\s+|\/|,|-|CON|Y/)
+                        .map(c => c.trim())
+                        .filter(Boolean)
+                        .includes(color);
+                }
+            )
+    );
 
 
             const coincidePrecio =
