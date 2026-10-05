@@ -8,6 +8,59 @@
 const inventario = [
 
     {
+    marca: "MARINA",
+    modelo: "86102",
+    caracteristicas: "PASTA VERDE OSCURO",
+    color: "VERDE",
+    cantidad: 1,
+    precio: null,
+    imagenes: [
+        "imagenes/MARINA86102.png",
+        "imagenes/MARINA861022.png"
+    ],
+    categorias: ["MUJER"]
+},
+{
+    marca: "FOFO",
+    modelo: "9622",
+    caracteristicas: "PASTA TRANSPARENTE CAREY",
+    color: "TRANSPARENTE CAREY",
+    cantidad: 1,
+    precio: null,
+    imagenes: [
+        "imagenes/FOFO9622.png",
+         "imagenes/FOFO96222.png"
+    ],
+    categorias: ["MUJER"]
+},
+{
+    marca: "SM",
+    modelo: "78152",
+    caracteristicas: "PASTA NEGRA",
+    color: "NEGRO",
+    cantidad: 1,
+    precio: null,
+    imagenes: [
+        "imagenes/SM78152.png",
+         "imagenes/SM781522.png"
+    ],
+    categorias: ["MUJER"]
+},
+{
+    marca: "FOFO",
+    modelo: "53129",
+    caracteristicas: "PASTA ROSA TRANSPARENTE",
+    color: "ROSA",
+    cantidad: 1,
+    precio: null,
+    imagenes: [
+        "imagenes/FOFO53129.png",
+         "imagenes/FOFO531292.png"
+    ],
+    categorias: ["MUJER"],
+    destacado: true
+},
+    {
         marca: "SM",
         modelo: "62013",
         caracteristicas: "PASTA TRANSPARENTE VERDE",
@@ -1428,8 +1481,7 @@ const inventario = [
     imagenes: [
         "imagenes/VITTORIO PEOPLE 21005.png"
     ],
-    categorias: ["MUJER"],
-    destacado: true
+    categorias: ["MUJER"]
 },
 
     {
