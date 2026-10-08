@@ -102,8 +102,9 @@ const inventario = [
         color: "GRIS",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/PRINCENOBLE5007.png"
+        ],
+        categorias: ["HOMBRE"]
     },
 
     {
@@ -319,18 +320,6 @@ const inventario = [
         imagenes: [],
         categorias: []
     },
-
-    {
-        marca: "CAFFSEN",
-        modelo: "138",
-        caracteristicas: "RANURADO METALICO DORADO",
-        color: "DORADO",
-        cantidad: 1,
-        precio: null,
-        imagenes: [],
-        categorias: []
-    },
-
     {
         marca: "MARINA",
         modelo: "23007",
@@ -338,8 +327,11 @@ const inventario = [
         color: "PLATEADO",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: [
+        "imagenes/92398.png",
+        "imagenes/92399.png",
+    ],
+        categorias: ["HOMBRE"]
     },
 
     {
@@ -352,18 +344,6 @@ const inventario = [
         imagenes: [],
         categorias: []
     },
-
-    {
-        marca: "CAFFSEN",
-        modelo: "138",
-        caracteristicas: "DOBLE PUENTE METÁLICO DORADO",
-        color: "DORADO",
-        cantidad: 1,
-        precio: null,
-        imagenes: [],
-        categorias: []
-    },
-
     {
         marca: "CAFFSEN",
         modelo: "140",
@@ -400,12 +380,13 @@ const inventario = [
     {
         marca: "CAFFSEN",
         modelo: "141",
-        caracteristicas: "PASTA NEGRO CON TRANSPARENTE",
-        color: "NEGRO",
+        caracteristicas: "PASTA AZUL MARINO",
+        color: "AZUL MARINO",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/CAFFSEN141.png",
+                "imagenes/CAFFSEN1412.png"],
+        categorias: ["HOMBRE"]
     },
 
     {
@@ -498,8 +479,8 @@ const inventario = [
         color: "DORADO CAREY",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/UNIK.png"],
+        categorias: ["HOMBRE", "MUJER"]
     },
 
     {
@@ -509,8 +490,8 @@ const inventario = [
         color: "NEGRO",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: [ "imagenes/TEKOO.png", "imagenes/TEKOO2.png"],
+        categorias: ["HOMBRE"]
     },
 
     {
@@ -538,6 +519,7 @@ const inventario = [
     marca: "CAFFSEN",
     modelo: "8082",
     caracteristicas: "PASTA TRANSPARENTE",
+     color: "TRANSPARENTE",
     cantidad: 1,
     precio: null,
     imagenes: [
@@ -577,6 +559,7 @@ const inventario = [
         categorias: []
     },
 
+
     {
         marca: "RIVALTO",
         modelo: "77",
@@ -595,8 +578,8 @@ const inventario = [
         color: "PURPURA",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/CACTUS101P.png","imagenes/CACTUS1012P.png", ],
+        categorias: ["HOMBRE"]
     },
 
     {
@@ -613,12 +596,12 @@ const inventario = [
     {
         marca: "CAFFSEN",
         modelo: "810",
-        caracteristicas: "METÁLICO GRIS",
-        color: "GRIS",
+        caracteristicas: "METÁLICO CAFÉ",
+        color: "CAFÉ",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/CAFFSEN810.png","imagenes/CAFFSEN8102.png" ],
+        categorias: ["HOMBRE"]
     },
 
     {
@@ -650,8 +633,10 @@ const inventario = [
         color: "NEGRO PLATA",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/ROYALTY6020.png",
+            "imagenes/ROYALTY60202.png"
+        ],
+        categorias: ["MUJER"]
     },
 
     {
@@ -661,10 +646,21 @@ const inventario = [
         color: "NEGRO",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/CAFFSEN856.png",
+            "imagenes/CAFFSEN8562.png"],
+        categorias: ["HOMBRE"]
     },
-
+ {
+        marca: "CAFFSEN",
+        modelo: "856",
+        caracteristicas: "DOBLE PUENTE METÁLICO DORADO",
+        color: "DORADO",
+        cantidad: 1,
+        precio: null,
+        imagenes: ["imagenes/CAFFSEN856D.png",
+            "imagenes/CAFFSEN8562D.png"],
+        categorias: ["HOMBRE"]
+    },
     {
         marca: "WHARTON",
         modelo: "9067",
@@ -672,8 +668,9 @@ const inventario = [
         color: "AZUL PLATEADO",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/WHARTON9067.png",
+            "imagenes/WHARTON90672.png"],
+        categorias: ["HOMBRE"]
     },
 
     {
@@ -702,6 +699,7 @@ const inventario = [
         marca: "LOTUS",
         modelo: "7005",
         caracteristicas: "ACETATO TRANSPARENTE",
+         color: "TRANSPARENTE",
         cantidad: 1,
         precio: null,
         imagenes: [
@@ -729,19 +727,20 @@ const inventario = [
         color: "VERDE",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/62014.png", "imagenes/620142.png"],
+        categorias: ["HOMBRE"]
     },
 
     {
         marca: "CAFFSEN",
         modelo: "8062",
         caracteristicas: "PASTA TRANSPARENTE",
+        color: "TRANSPARENTE",
         cantidad: 1,
         precio: null,
         imagenes: [
          "imagenes/CAFFSEN8062.png",
-          "imagenes/CAFFSEN28062.png",
+          "imagenes/CAFFSEN28062.png"
         ],
         categorias: ["HOMBRE", "MUJER"]
     },
@@ -754,8 +753,7 @@ const inventario = [
         cantidad: 1,
         precio: null,
         imagenes: [
-        "imagenes/CAFFSEN8048.png",
-        "imagenes/CAFFSEN28048.png"
+        "imagenes/CAFFSEN8048.png"
         ],
         categorias: ["MUJER", "HOMBRE"]
     },
@@ -810,8 +808,8 @@ const inventario = [
         color: "DORADO",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/PRIETO.png", "imagenes/PRIETO2.png",],
+        categorias: ["HOMBRES"]
     },
 
     {
@@ -889,8 +887,8 @@ const inventario = [
         color: "ROSA",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: [ ],
+        categorias: [ "MUJER"]
     },
 
     {
@@ -1185,8 +1183,8 @@ const inventario = [
         color: "AMBAR",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: [ "imagenes/92396.png"],
+        categorias: ["HOMBRE", "MUJERS"]
     },
 
     {
@@ -1383,8 +1381,8 @@ const inventario = [
         color: "NEGRO",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/LATIV145.png", "imagenes/LATIV1452.png"],
+        categorias: ["HOMBRE"]
     },
 
     {
@@ -1630,8 +1628,9 @@ const inventario = [
         color: "AZUL",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: [ "imagenes/TOPMODA.png",
+        "imagenes/TOPMODA2.png"],
+        categorias: ["NIÑOS"]
     },
 
     {
@@ -1641,8 +1640,9 @@ const inventario = [
         color: "ROSA",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/TOPMODAR.png",
+        "imagenes/TOPMODAR2.png"],
+        categorias: ["NIÑOS"]
     },
 
     {
@@ -1652,8 +1652,9 @@ const inventario = [
         color: "AZUL MORADO",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/PLEXVISION2.png",
+        "imagenes/PLEXVISION.png"],
+        categorias: ["NIÑOS"]
     },
 
     {
@@ -1685,8 +1686,8 @@ const inventario = [
         color: "AMARILLO",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/CAFFSEN1839.png", "imagenes/CAFFSEN18392.png"],
+        categorias: ["NIÑOS"]
     },
 
     {
@@ -1696,8 +1697,8 @@ const inventario = [
         color: "NEGRO ROSA",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/PLEXVISION3304.png", "imagenes/PLEXVISION33042.png"],
+        categorias: ["NIÑOS"]
     },
 
     {
@@ -1827,10 +1828,13 @@ const inventario = [
         marca: "ZOZA",
         modelo: "8552",
         caracteristicas: "PASTA TRANSPARENTE",
+        color: "TRANSPARENTE",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/ZOZA8552.png",
+            "imagenes/ZOZA85522.png"
+        ],
+        categorias: ["HOMBRE"]
     },
 
     {
@@ -2118,8 +2122,10 @@ const inventario = [
         color: "CAFE",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/FUNKYFRED4001.png",
+            "imagenes//FUNKYFRED40012.png"
+        ],
+        categorias: ["HOMBRE"]
     },
 
     {
@@ -2184,8 +2190,10 @@ const inventario = [
         color: "NEGRO PLATA",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/PRINCENOBLE1702.png",
+            "imagenes/PRINCENOBLE17022.png"
+        ],
+        categorias: ["HOMBRE"]
     },
 
     {
@@ -2195,8 +2203,10 @@ const inventario = [
         color: "NEGRO",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/CB2260107.png",
+          "imagenes/CB22601072.png"  
+        ],
+        categorias: ["HOMBRE"]
     },
 
     {
@@ -2206,8 +2216,8 @@ const inventario = [
         color: "PLATA",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/CB2273080.png"],
+        categorias: ["HOMBRE"]
     },
 
     {
@@ -2491,8 +2501,8 @@ const inventario = [
         color: "NEGRO",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: [ "imagenes/C-MARK107.png", "imagenes/C-MARK1072.png"],
+        categorias: ["HOMBRE"]
     },
 
     {
@@ -2549,8 +2559,10 @@ const inventario = [
         color: "AZUL",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/CAFFSEN902.png",
+            "imagenes/CAFFSEN9022.png"
+        ],
+        categorias: ["HOMBRE"]
     },
 
     {
@@ -2593,8 +2605,8 @@ const inventario = [
         color: "CAFE",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/GEMMAC.png", "imagenes/GEMMAC2.png",],
+        categorias: ["MUJER", "HOMBRE"]
     },
 
     {
@@ -2619,8 +2631,8 @@ const inventario = [
         color: "TRANSPARENTE",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/GEMMAR.png", "imagenes/GEMMAR2.png",],
+        categorias: ["MUJER", "HOMBRE"]
     },
 
     {
@@ -2698,8 +2710,9 @@ const inventario = [
         color: "GRIS",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/DILO89012.png",
+             "imagenes/DILO890122.png"],
+        categorias: ["HOMBRE"]
     },
 
     {
@@ -2742,8 +2755,9 @@ const inventario = [
         color: "AZUL",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/ANTONIOMIRO.png",
+             "imagenes/ANTONIOMIRO2.png"],
+        categorias: ["HOMBRE"]
     },
 
     {
@@ -2833,6 +2847,16 @@ const inventario = [
         imagenes: [],
         categorias: []
     },
+    {
+        marca: "CAFFSEN",
+        modelo: "138",
+        caracteristicas: "RANURADO METALICO DORADO",
+        color: "DORADO",
+        cantidad: 1,
+        precio: null,
+        imagenes: ["imagenes/CAFFSEN138.png", "imagenes/CAFFSEN1382.png"],
+        categorias: ["HOMBRE"]
+    },
 
         /* =====================================================
 
@@ -2843,6 +2867,7 @@ const inventario = [
         marca: "C-MARK",
         modelo: "0206",
         caracteristicas: "METÁLICO PASTA NEGRA",
+         color: "NEGRO",
         cantidad: 1,
         precio: null,
         imagenes: [
@@ -2868,26 +2893,37 @@ const inventario = [
 {
     marca: "SM",
     modelo: "SM003",
-    caracteristicas: "METÁLICO GRIS CON PASTA CAFÉ TRANSPARENTE",
-    color: "GRIS CAFE",
+    caracteristicas: "METÁLICO GRIS CON AZUL MARINO",
+    color: "GRIS AZUL MARINO",
     cantidad: 1,
     precio: null,
     imagenes: [
-        "imagenes/92398.png",
-        "imagenes/92399.png",
+        "imagenes/SM003.png",
+        "imagenes/SM0032.png"
     ],
-    categorias: ["MUJER", "HOMBRE"]
+    categorias: [ "HOMBRE"]
 },
 {
+        marca: "ELEGANCIA",
+        modelo: "5072",
+        caracteristicas: "METÁLICO NEGRO",
+        color: "NEGRO",
+        cantidad: 1,
+        precio: null,
+        imagenes: [ "imagenes/ELEGANCIA5072.png",
+        "imagenes/ELEGANCIA5072.png"],
+        categorias: ["HOMBRE"]
+    },
+{
     marca: "SM",
-    modelo: "SM004",
-    caracteristicas: "PASTA ROSA CAFÉ TRANSPARENTE",
-    color: "CAFE ROSA",
+    modelo: "004",
+    caracteristicas: "PASTA GRIS TRANSPARENTE CON METÁLICO NEGRO",
+    color: "GRIS NEGRO",
     cantidad: 1,
     precio: null,
     imagenes: [
-        "imagenes/92396.png"
+        "imagenes/SM004.png"
     ],
-    categorias: ["MUJER"]
+    categorias: ["MUJER", "HOMBRE"]
 },
 ];
