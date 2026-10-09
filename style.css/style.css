@@ -3227,3 +3227,16 @@ padding-top: 18px;
         opacity: 1;
     }
 }
+/* =========================================
+   CORREGIR FOTOS DE ARMAZONES EN CELULAR
+   ========================================= */
+
+@media (max-width: 768px) {
+
+    .modal-imagen img {
+        transform: none !important;
+        transform-origin: center !important;
+        object-fit: contain !important;
+    }
+
+}
