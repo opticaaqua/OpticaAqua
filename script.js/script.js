@@ -157,7 +157,41 @@ function agruparProductos(inventario) {
 
 }
 
-const productos = agruparProductos(inventario);
+// ================================
+// PRODUCTOS LISTOS PARA PUBLICARSE
+// ================================
+
+const inventarioPublicado = inventario.filter(item => {
+
+    const tieneFotografia =
+        Array.isArray(item.imagenes) &&
+        item.imagenes.some(imagen =>
+            typeof imagen === "string" &&
+            imagen.trim() !== ""
+        );
+
+    const tieneCategoria =
+        Array.isArray(item.categorias) &&
+        item.categorias.length > 0;
+
+    const tieneColor =
+        typeof item.color === "string" &&
+        item.color.trim() !== "";
+
+    const tieneCaracteristicas =
+        typeof item.caracteristicas === "string" &&
+        item.caracteristicas.trim() !== "";
+
+    return (
+        tieneFotografia &&
+        tieneCategoria &&
+        tieneColor &&
+        tieneCaracteristicas
+    );
+
+});
+
+const productos = agruparProductos(inventarioPublicado);
 function prioridadProducto(producto) {
 
     const tieneImagen = producto.variantes.some(variante =>
