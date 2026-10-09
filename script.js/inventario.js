@@ -2911,7 +2911,7 @@ const inventario = [
         cantidad: 1,
         precio: null,
         imagenes: [ "imagenes/ELEGANCIA5072.png",
-        "imagenes/ELEGANCIA5072.png"],
+        "imagenes/ELEGANCIA50702.png"],
         categorias: ["HOMBRE"]
     },
 {

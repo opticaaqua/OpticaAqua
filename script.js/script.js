@@ -1,1480 +1,3149 @@
 /* =====================================================
+ 
    CONFIGURACIÓN
+ 
 ===================================================== */
-
+ 
+ 
+ 
 const coloresConocidos = [
+ 
     "NEGRO",
+ 
     "AZUL MARINO",
+ 
     "AZUL REY",
+ 
     "AZUL",
+ 
     "DORADO",
+ 
     "PLATEADO",
+ 
     "PLATA",
+ 
     "CAFE",
+ 
     "CAREY",
+ 
     "VINO",
+ 
     "ROJO",
+ 
     "ROSA",
+ 
     "VERDE",
+ 
     "MORADO",
+ 
     "PURPURA",
+ 
     "NARANJA",
+ 
     "AMARILLO",
+ 
     "BLANCO",
+ 
     "GRIS",
+ 
     "MELON",
+ 
     "BEIGE",
+ 
     "AMBAR",
+ 
     "AQUA",
+ 
     "TORNASOL"
+ 
 ];
-
-
+ 
+ 
+ 
+ 
+ 
 /* =====================================================
+ 
    NORMALIZAR TEXTO
+ 
 ===================================================== */
-
+ 
+ 
+ 
 function normalizar(texto) {
-
+ 
+ 
+ 
     return String(texto ?? "")
+ 
         .normalize("NFD")
+ 
         .replace(/[\u0300-\u036f]/g, "")
+ 
         .toUpperCase()
+ 
         .trim();
-
+ 
+ 
+ 
 }
-
-
+ 
+ 
+ 
+ 
+ 
 /* =====================================================
+ 
    DETECTAR COLORES
+ 
 ===================================================== */
-
+ 
+ 
+ 
 function obtenerColores(caracteristicas, colorDefinido) {
-
+ 
+ 
+ 
     // Si el producto tiene un color definido manualmente,
+ 
     // usamos ese como una sola variante de color.
+ 
     if (colorDefinido) {
+ 
         return [colorDefinido];
+ 
     }
-
+ 
+ 
+ 
     // Productos antiguos sin campo "color":
+ 
     // siguen funcionando como hasta ahora.
+ 
     const texto = normalizar(caracteristicas);
-
+ 
+ 
+ 
     return coloresConocidos.filter(color =>
+ 
         texto.includes(normalizar(color))
+ 
     );
+ 
 }
-
-
+ 
+ 
+ 
+ 
+ 
 /* =====================================================
+ 
    DETECTAR MATERIAL
+ 
 ===================================================== */
-
+ 
+ 
+ 
 function obtenerMaterial(caracteristicas) {
-
+ 
+ 
+ 
     const texto = normalizar(caracteristicas);
-
+ 
+ 
+ 
     const materiales = [];
-
+ 
+ 
+ 
     if (texto.includes("PASTA")) {
+ 
         materiales.push("PASTA");
+ 
     }
-
+ 
+ 
+ 
     if (texto.includes("ACETATO")) {
+ 
         materiales.push("ACETATO");
+ 
     }
-
+ 
+ 
+ 
     if (texto.includes("METALICO")) {
+ 
         materiales.push("METALICO");
+ 
     }
-
+ 
+ 
+ 
     if (texto.includes("TITANIO")) {
+ 
         materiales.push("TITANIO");
+ 
     }
-
+ 
+ 
+ 
     return materiales;
-
+ 
+ 
+ 
 }
-
-
+ 
+ 
+ 
+ 
+ 
 /* =====================================================
+ 
    AGRUPAR PRODUCTOS
+ 
 ===================================================== */
+ 
 function agruparProductos(inventario) {
-
+ 
+ 
+ 
     const grupos = {};
-
+ 
+ 
+ 
     inventario.forEach(item => {
-
+ 
+ 
+ 
         const clave =
+ 
             `${normalizar(item.marca)}-${normalizar(item.modelo)}`;
-
+ 
+ 
+ 
         if (!grupos[clave]) {
-
+ 
+ 
+ 
             grupos[clave] = {
+ 
                 marca: item.marca,
+ 
                 modelo: item.modelo,
+ 
                 destacado: false,
+ 
                 variantes: []
+ 
             };
-
+ 
+ 
+ 
         }
-
+ 
+ 
+ 
         // Si CUALQUIER variante está destacada,
+ 
         // todo el producto queda destacado
+ 
         if (item.destacado === true) {
+ 
             grupos[clave].destacado = true;
+ 
         }
-
+ 
+ 
+ 
         grupos[clave].variantes.push({
-
+ 
+ 
+ 
             caracteristicas: item.caracteristicas,
-
+ 
+ 
+ 
             colores:
+ 
                 obtenerColores(item.caracteristicas, item.color),
-
+ 
+ 
+ 
             materiales:
+ 
                 obtenerMaterial(item.caracteristicas),
-
+ 
+ 
+ 
             cantidad:
+ 
                 item.cantidad,
-
+ 
+ 
+ 
             categorias:
+ 
                 item.categorias || [],
-
+ 
+ 
+ 
             precio:
+ 
                 item.precio,
-
+ 
+ 
+ 
             imagenes:
+ 
                 item.imagenes || []
-
+ 
+ 
+ 
         });
-
+ 
+ 
+ 
     });
-
+ 
+ 
+ 
     return Object.values(grupos);
-
+ 
+ 
+ 
 }
-
+ 
+ 
+ 
 // ================================
+ 
 // PRODUCTOS LISTOS PARA PUBLICARSE
+ 
 // ================================
-
+ 
+ 
+ 
 const inventarioPublicado = inventario.filter(item => {
-
+ 
+ 
+ 
     const tieneFotografia =
+ 
         Array.isArray(item.imagenes) &&
+ 
         item.imagenes.some(imagen =>
+ 
             typeof imagen === "string" &&
+ 
             imagen.trim() !== ""
+ 
         );
-
+ 
+ 
+ 
     const tieneCategoria =
+ 
         Array.isArray(item.categorias) &&
+ 
         item.categorias.length > 0;
-
+ 
+ 
+ 
     const tieneColor =
+ 
         typeof item.color === "string" &&
+ 
         item.color.trim() !== "";
-
+ 
+ 
+ 
     const tieneCaracteristicas =
+ 
         typeof item.caracteristicas === "string" &&
+ 
         item.caracteristicas.trim() !== "";
-
+ 
+ 
+ 
     return (
+ 
         tieneFotografia &&
+ 
         tieneCategoria &&
+ 
         tieneColor &&
+ 
         tieneCaracteristicas
+ 
     );
-
+ 
+ 
+ 
 });
-
+ 
+ 
+ 
 const productos = agruparProductos(inventarioPublicado);
+ 
+// ABRIR AUTOMÁTICAMENTE UN PRODUCTO COMPARTIDO
+ 
+ 
+ 
+function abrirProductoCompartido() {
+ 
+ 
+ 
+    const parametros = new URLSearchParams(window.location.search);
+ 
+    const claveCompartida = parametros.get("producto");
+ 
+ 
+ 
+    if (!claveCompartida) return;
+ 
+ 
+ 
+    const productoEncontrado = productos.find(producto => {
+ 
+ 
+ 
+        const claveProducto =
+ 
+            `${normalizar(producto.marca)}-${normalizar(producto.modelo)}`;
+ 
+ 
+ 
+        return claveProducto === claveCompartida;
+ 
+ 
+ 
+    });
+ 
+ 
+ 
+    if (productoEncontrado) {
+ 
+        abrirProducto(productoEncontrado);
+ 
+    }
+ 
+ 
+ 
+}
+ 
+ 
+ 
+    
+ 
 function prioridadProducto(producto) {
-
+ 
+ 
+ 
     const tieneImagen = producto.variantes.some(variante =>
+ 
         variante.imagenes &&
+ 
         variante.imagenes.length > 0
+ 
     );
-
+ 
+ 
+ 
     const tieneCategoria = producto.variantes.some(variante =>
+ 
         variante.categorias &&
+ 
         variante.categorias.length > 0
+ 
     );
-
+ 
+ 
+ 
     // 1. Imagen + categoría
+ 
     if (tieneImagen && tieneCategoria) {
+ 
         return 1;
+ 
     }
-
+ 
+ 
+ 
     // 2. Solo imagen
+ 
     if (tieneImagen) {
+ 
         return 2;
+ 
     }
-
+ 
+ 
+ 
     // 3. Imagen default
+ 
     return 3;
+ 
 }
-
+ 
+ 
+ 
 productos.sort((a, b) =>
+ 
     prioridadProducto(a) - prioridadProducto(b)
+ 
 );
-
-
+ 
+ 
+ 
+ 
+ 
 /* =====================================================
+ 
    ELEMENTOS DE LA PÁGINA
+ 
 ===================================================== */
-
+ 
+ 
+ 
 const contenedorProductos =
+ 
     document.querySelector(".productos");
-
+ 
+ 
+ 
 const botonAbrirFiltros =
+ 
     document.querySelector("#abrir-filtros");
-
+ 
+ 
+ 
 const botonAbrirFiltrosCatalogo =
+ 
     document.querySelector("#abrir-filtros-catalogo");
-
+ 
+ 
+ 
 const botonCerrarFiltros =
+ 
     document.querySelector("#cerrar-filtros");
-
+ 
+ 
+ 
 const panelFiltros =
+ 
     document.querySelector("#panel-filtros");
-
+ 
+ 
+ 
 const buscarModelo =
+ 
     document.querySelector("#buscar-modelo");
-
+ 
+ 
+ 
 const filtroMarca =
+ 
     document.querySelector("#filtro-marca");
-
+ 
+ 
+ 
 const filtroMaterial =
+ 
     document.querySelector("#filtro-material");
-
+ 
+ 
+ 
 const botonesCategoria = document.querySelectorAll(".categoria");
-
+ 
+ 
+ 
 let categoriaActiva = "TODOS";
-
+ 
+ 
+ 
 const filtroColor =
+ 
     document.querySelector("#filtro-color");
-
+ 
+ 
+ 
 const filtroPrecio =
+ 
     document.querySelector("#filtro-precio");
-
+ 
+ 
+ 
 const limpiarFiltros =
+ 
     document.querySelector("#limpiar-filtros");
-
+ 
+ 
+ 
 const aplicarFiltrosBoton =
+ 
     document.querySelector("#aplicar-filtros");
-
-
+ 
+ 
+ 
+ 
+ 
 /* =====================================================
+ 
    IMAGEN TEMPORAL
+ 
 ===================================================== */
-
+ 
+ 
+ 
 function obtenerImagenPrincipal(producto) {
-
+ 
+ 
+ 
     for (const variante of producto.variantes) {
-
+ 
+ 
+ 
         if (
+ 
             variante.imagenes &&
+ 
             variante.imagenes.length > 0
+ 
         ) {
+ 
             return variante.imagenes[0];
+ 
         }
-
+ 
+ 
+ 
     }
-
+ 
+ 
+ 
     return "imagenes/01.png";
-
+ 
+ 
+ 
 }
-
-
+ 
+ 
+ 
+ 
+ 
 /* =====================================================
+ 
    COLORES DE UN PRODUCTO
+ 
 ===================================================== */
-
+ 
+ 
+ 
 function coloresProducto(producto) {
-
+ 
+ 
+ 
     const colores = producto.variantes.flatMap(
+ 
         variante => variante.colores
+ 
     );
-
+ 
+ 
+ 
     return [...new Set(colores)];
-
+ 
+ 
+ 
 }
-
-
+ 
+ 
+ 
+ 
+ 
 /* =====================================================
+ 
    MOSTRAR PRODUCTOS
+ 
 ===================================================== */
-
+ 
+ 
+ 
 function mostrarProductos(lista) {
-
+ 
+ 
+ 
     contenedorProductos.innerHTML = "";
-
+ 
+ 
+ 
     if (lista.length === 0) {
-
+ 
+ 
+ 
         contenedorProductos.innerHTML = `
+ 
             <p class="sin-resultados">
+ 
                 No encontramos armazones con esos filtros.
+ 
             </p>
+ 
         `;
-
+ 
+ 
+ 
         return;
-
+ 
+ 
+ 
     }
-
-
+ 
+ 
+ 
+ 
+ 
     lista.forEach(producto => {
-
+ 
+ 
+ 
         const tarjeta =
+ 
             document.createElement("div");
-
+ 
+ 
+ 
         tarjeta.classList.add("tarjeta-producto");
-
-
+ 
+ 
+ 
+ 
+ 
         const colores =
+ 
             coloresProducto(producto);
-
-
+ 
+ 
+ 
+ 
+ 
         const textoColores =
+ 
             colores.length === 1
+ 
                 ? "1 color disponible"
+ 
                 : `${colores.length} colores disponibles`;
-
-
+ 
+ 
+ 
+ 
+ 
         tarjeta.innerHTML = `
-
+ 
+ 
+ 
             <div class="producto-imagen">
-
+ 
+ 
+ 
                 <img
+ 
                     src="${obtenerImagenPrincipal(producto)}"
+ 
                     alt="${producto.marca} ${producto.modelo}"
+ 
                 >
-
+ 
+ 
+ 
             </div>
-
+ 
+ 
+ 
             <div class="producto-info">
-
+ 
+ 
+ 
                 <h3>
+ 
                     ${producto.marca}
+ 
                 </h3>
-
+ 
+ 
+ 
                 <p class="modelo">
+ 
                     Modelo ${producto.modelo}
+ 
                 </p>
-
+ 
+ 
+ 
                 <p class="tipo">
+ 
                     ${textoColores}
+ 
 </p>
-
+ 
+ 
+ 
 </div>
-
+ 
+ 
+ 
             </div>
-
+ 
+ 
+ 
         `;
-
-
+ 
+ 
+ 
+ 
+ 
         /* ABRIR FICHA DEL PRODUCTO */
-
+ 
+ 
+ 
         tarjeta.addEventListener("click", () => {
-
+ 
+ 
+ 
             abrirProducto(producto);
-
+ 
+ 
+ 
         });
-
-
-        /* CAMBIO DE FOTO CON HOVER */
-
+ 
+/* CAMBIO DE FOTO CON HOVER */
+ 
+ 
+ 
         prepararHover(tarjeta, producto);
-
-
+ 
+ 
+ 
+ 
+ 
         contenedorProductos.appendChild(tarjeta);
-
+ 
+ 
+ 
     });
-
+ 
+ 
+ 
 }
-
-
+ 
+ 
+ 
+ 
+ 
 /* =====================================================
+ 
    HOVER DE FOTOGRAFÍAS
+ 
 ===================================================== */
-
+ 
+ 
+ 
 function prepararHover(tarjeta, producto) {
-
+ 
+ 
+ 
     const imagen =
+ 
         tarjeta.querySelector(".producto-imagen img");
-
-
+ 
+ 
+ 
+ 
+ 
     const imagenes = producto.variantes.flatMap(
+ 
         variante => variante.imagenes || []
+ 
     );
-
-
+ 
+ 
+ 
+ 
+ 
     if (imagenes.length <= 1) {
+ 
         return;
+ 
     }
-
-
+ 
+ 
+ 
+ 
+ 
     let indice = 0;
+ 
     let intervalo;
-
-
+ 
+ 
+ 
+ 
+ 
     tarjeta.addEventListener("mouseenter", () => {
-
+ 
+ 
+ 
         intervalo = setInterval(() => {
-
+ 
+ 
+ 
             indice++;
-
+ 
+ 
+ 
             if (indice >= imagenes.length) {
+ 
                 indice = 0;
+ 
             }
-
+ 
+ 
+ 
             imagen.src =
+ 
                 imagenes[indice];
-
+ 
+ 
+ 
         }, 900);
-
+ 
+ 
+ 
     });
-
-
+ 
+ 
+ 
+ 
+ 
     tarjeta.addEventListener("mouseleave", () => {
-
+ 
+ 
+ 
         clearInterval(intervalo);
-
+ 
+ 
+ 
         indice = 0;
-
+ 
+ 
+ 
         imagen.src =
+ 
             imagenes[0];
-
+ 
+ 
+ 
     });
-
+ 
+ 
+ 
 }
-
-
+ 
+ 
+ 
+ 
+ 
 /* =====================================================
+ 
    CREAR MODAL
+ 
 ===================================================== */
-
+ 
+ 
+ 
 const modal = document.createElement("div");
-
+ 
+ 
+ 
 modal.classList.add("modal-producto");
-
+ 
+ 
+ 
 modal.innerHTML = `
-
+ 
+ 
+ 
     <div class="modal-contenido">
-
+ 
+ 
+ 
         <button class="cerrar-modal">
+ 
             ×
+ 
         </button>
-
+ 
+ 
+ 
         <div class="modal-interior"></div>
-
+ 
+ 
+ 
     </div>
-
+ 
+ 
+ 
 `;
-
+ 
+ 
+ 
 document.body.appendChild(modal);
-
-
+ 
+ 
+ 
+ 
+ 
 const cerrarModal =
+ 
     modal.querySelector(".cerrar-modal");
-
+ 
+ 
+ 
 const modalInterior =
+ 
     modal.querySelector(".modal-interior");
-
-
+ 
+ 
+ 
+ 
+ 
 cerrarModal.addEventListener("click", () => {
-
+ 
+ 
+ 
     modal.classList.remove("activo");
-
+ 
+ 
+ 
 });
-
-
+ 
+ 
+ 
+ 
+ 
 modal.addEventListener("click", evento => {
-
+ 
+ 
+ 
     if (evento.target === modal) {
-
+ 
+ 
+ 
         modal.classList.remove("activo");
-
+ 
+ 
+ 
     }
-
+ 
+ 
+ 
 });
-
-
+ 
+ 
+ 
+ 
+ 
 /* =====================================================
+ 
    ABRIR PRODUCTO
+ 
 ===================================================== */
-
+ 
+ 
+ 
 function abrirProducto(producto) {
+ 
     panelFiltros.classList.remove("activo");
-
+ 
+ 
+ 
     const colores =
+ 
         coloresProducto(producto);
-
-
+ 
+ 
+ 
+ 
+ 
     modalInterior.innerHTML = `
-
+ 
+ 
+ 
         <div class="modal-galeria">
-
+ 
+ 
+ 
     <div class="modal-imagen">
-
+ 
+ 
+ 
         <img
+ 
             id="imagen-modal"
+ 
             src="${obtenerImagenPrincipal(producto)}"
+ 
             alt="${producto.marca} ${producto.modelo}"
+ 
         >
-
+ 
+<button
+ 
+    type="button"
+ 
+    class="boton-compartir-ficha"
+ 
+    id="compartir-producto"
+ 
+    title="Compartir armazón"
+ 
+    aria-label="Compartir armazón"
+ 
+>
+ 
+    <svg
+ 
+        xmlns="http://www.w3.org/2000/svg"
+ 
+        width="20"
+ 
+        height="20"
+ 
+        viewBox="0 0 24 24"
+ 
+        fill="none"
+ 
+        stroke="currentColor"
+ 
+        stroke-width="1.8"
+ 
+        stroke-linecap="round"
+ 
+        stroke-linejoin="round"
+ 
+    >
+ 
+        <circle cx="18" cy="5" r="3"></circle>
+ 
+        <circle cx="6" cy="12" r="3"></circle>
+ 
+        <circle cx="18" cy="19" r="3"></circle>
+ 
+        <path d="m8.7 13.5 6.6 4"></path>
+ 
+        <path d="m15.3 6.5-6.6 4"></path>
+ 
+    </svg>
+ 
+<span class="texto-compartir">Compartir armazón</span>
+ 
+</button>
+ 
     </div>
-
+ 
+ 
+ 
     <div
+ 
         class="miniaturas-modal"
+ 
         id="miniaturas-modal">
+ 
     </div>
-
+ 
+ 
+ 
 </div>
-
-
+ 
+ 
+ 
+ 
+ 
         <div class="modal-datos">
-
+ 
+ 
+ 
             <p class="subtitulo">
+ 
                 ${producto.marca}
+ 
             </p>
-
+ 
+ 
+ 
             <h2>
+ 
                 Modelo ${producto.modelo}
+ 
             </h2>
-
-
+ 
+ 
+ 
+ 
+ 
             <p>
+ 
                 ${producto.variantes.length}
+ 
                 ${
+ 
                     producto.variantes.length === 1
+ 
                         ? "variante disponible"
+ 
                         : "variantes disponibles"
+ 
                 }
+ 
             </p>
-
-
+ 
+ 
+ 
+ 
+ 
             <div class="variantes-modal">
-
+ 
+ 
+ 
                 ${producto.variantes.map(
+ 
                     (variante, indice) => `
-
+ 
+ 
+ 
                     <button
+ 
                         class="boton-variante"
+ 
                         data-indice="${indice}"
+ 
                     >
-
+ 
+ 
+ 
                         ${
+ 
                             variante.colores.length > 0
+ 
                                 ? variante.colores.join(" / ")
+ 
                                 : variante.caracteristicas
+ 
                         }
-
+ 
+ 
+ 
                     </button>
-
+ 
+ 
+ 
                 `).join("")}
-
+ 
+ 
+ 
             </div>
-
-
+ 
+ 
+ 
+ 
+ 
             <div
+ 
                 class="detalle-variante"
+ 
                 id="detalle-variante"
+ 
             ></div>
-
+ 
+ 
+ 
         </div>
-
+ 
+ 
+ 
     `;
-
-
+ 
+ 
+ 
+ 
+ 
     modal.classList.add("activo");
-
-
+ 
+ 
+ 
+ 
+ 
     const botones =
+ 
         modalInterior.querySelectorAll(
+ 
             ".boton-variante"
+ 
         );
-
-
+ 
+ 
+ 
+ 
+ 
     botones.forEach(boton => {
-
+ 
+ 
+ 
         boton.addEventListener("click", () => {
-
+ 
+ 
+ 
             const indice =
+ 
                 Number(boton.dataset.indice);
-
+ 
+ 
+ 
             mostrarVariante(
+ 
                 producto.variantes[indice]
+ 
             );
-
+ 
+ 
+ 
         });
-
+ 
+ 
+ 
     });
-
-
+ 
+ 
+ 
+ 
+ 
     mostrarVariante(
+ 
         producto.variantes[0]
+ 
     );
-
-}
-
-
-/* =====================================================
-   MOSTRAR VARIANTE EN MODAL
-===================================================== */
-
-function mostrarVariante(variante) {
-
-    const detalle =
-        document.querySelector("#detalle-variante");
-
-    const imagenModal =
-        document.querySelector("#imagen-modal");
-
-    detalle.innerHTML = `
-
-        <p>
-            ${variante.caracteristicas}
-        </p>
-
-        <p>
-            Existencia: ${variante.cantidad}
-        </p>
-
-        ${
-            variante.precio !== null
-                ? `<p class="precio">
-                    $${variante.precio} MXN
-                   </p>`
-                : ""
-        }
-
-    `;
-
-
-    if (
-        variante.imagenes &&
-        variante.imagenes.length > 0
-    ) {
-
-        imagenModal.src =
-            variante.imagenes[0];
-
-
-        const miniaturas =
-            document.createElement("div");
-
-        miniaturas.classList.add("miniaturas-modal");
-
-
-        variante.imagenes.forEach(
-            (imagen, indice) => {
-
-                const miniatura =
-                    document.createElement("img");
-
-                miniatura.src = imagen;
-                miniatura.alt =
-                    `Vista ${indice + 1}`;
-
-                if (indice === 0) {
-                    miniatura.classList.add("activa");
-                }
-
-
-                miniatura.addEventListener(
-                    "click",
-                    () => {
-
-                        imagenModal.src = imagen;
-
-                        miniaturas
-                            .querySelectorAll("img")
-                            .forEach(img =>
-                                img.classList.remove("activa")
-                            );
-
-                        miniatura.classList.add("activa");
-
-                    }
-                );
-
-
-                miniaturas.appendChild(miniatura);
-
-            }
-        );
-
-
-        detalle.prepend(miniaturas);
-
-    }
-
-}
-
-
-/* =====================================================
-   GENERAR MARCAS AUTOMÁTICAMENTE
-===================================================== */
-
-function generarMarcas() {
-
-    const marcas = [
-        ...new Set(
-            productos.map(
-                producto => producto.marca
-            )
-        )
-    ];
-
-
-    marcas.sort(
-        (a, b) =>
-            a.localeCompare(b, "es")
-    );
-
-
-    marcas.forEach(marca => {
-
-        const opcion =
-            document.createElement("option");
-
-        opcion.value = marca;
-
-        opcion.textContent = marca;
-
-        filtroMarca.appendChild(opcion);
-
-    });
-
-}
-
-
-/* =====================================================
-   FILTROS
-===================================================== */
-
-function aplicarFiltros() {
-
-    const texto =
-        normalizar(buscarModelo.value);
-
-    const marca =
-        normalizar(filtroMarca.value);
-
-    const material =
-        normalizar(filtroMaterial.value);
-
-    const color =
-        normalizar(filtroColor.value);
-
-    const precio =
-        filtroPrecio.value;
-
-
-    const resultados =
-        productos.filter(producto => {
-
-
-            const textoProducto =
-                normalizar(`
-
-                    ${producto.marca}
-
-                    ${producto.modelo}
-
-                    ${
-                        producto.variantes
-                            .map(
-                                variante =>
-                                    variante.caracteristicas
-                            )
-                            .join(" ")
-                    }
-
-                `);
-
-
-            const coincideTexto =
-                textoProducto.includes(texto);
-
-
-            const coincideMarca =
-                marca === "" ||
-                normalizar(producto.marca) === marca;
-
-
-            const coincideMaterial =
-                material === "" ||
-
-                producto.variantes.some(
-                    variante =>
-                        variante.materiales.some(
-                            item =>
-                                normalizar(item) === material
-                        )
-                );
-
-
-            const coincideColor =
-    color === "" ||
-
-    producto.variantes.some(
-        variante =>
-            variante.colores.some(
-                item => {
-                    const colorVariante = normalizar(item);
-
-                    return colorVariante
-                        .split(/\s+|\/|,|-|CON|Y/)
-                        .map(c => c.trim())
-                        .filter(Boolean)
-                        .includes(color);
-                }
-            )
-    );
-
-
-            const coincidePrecio =
-                precio === "" ||
-
-                producto.variantes.some(
-                    variante =>
-                        variante.precio !== null &&
-                        variante.precio <= Number(precio)
-                );
-const coincideCategoria =
-    categoriaActiva === "TODOS" ||
-
-    producto.variantes.some(
-        variante =>
-            variante.categorias?.includes(categoriaActiva)
-    );
-
-            return (
-
-    coincideTexto &&
-    coincideMarca &&
-    coincideMaterial &&
-    coincideColor &&
-    coincidePrecio &&
-    coincideCategoria
-
+ 
+// COMPARTIR LA FICHA DEL ARMAZÓN
+ 
+ 
+ 
+const botonCompartirFicha =
+ 
+    modalInterior.querySelector("#compartir-producto");
+ 
+ 
+ 
+botonCompartirFicha.addEventListener("click", async () => {
+ 
+ 
+ 
+    const enlace = new URL(
+ 
+    "https://opticaaqua.github.io/OpticaAqua/catalogo.html"
+ 
 );
-
-        });
-
-
-    mostrarProductos(resultados);
-
-}
-
-
-/* =====================================================
-   EVENTOS
-===================================================== */
-
-if (botonAbrirFiltros) {
-
-    botonAbrirFiltros.addEventListener(
-        "click",
-        () => {
-
-            panelFiltros.classList.add("activo");
-
-        }
-    );
-
-}
-
-
-botonCerrarFiltros.addEventListener(
-    "click",
-    () => {
-
-        panelFiltros.classList.remove("activo");
-
-    }
-);
-
-
-buscarModelo.addEventListener(
-    "input",
-    aplicarFiltros
-);
-
-
-filtroMarca.addEventListener(
-    "change",
-    aplicarFiltros
-);
-
-
-filtroMaterial.addEventListener(
-    "change",
-    aplicarFiltros
-);
-
-
-filtroColor.addEventListener(
-    "change",
-    aplicarFiltros
-);
-
-
-filtroPrecio.addEventListener(
-    "change",
-    aplicarFiltros
-);
-
-
-limpiarFiltros.addEventListener(
-    "click",
-    () => {
-
-        buscarModelo.value = "";
-        filtroMarca.value = "";
-        filtroMaterial.value = "";
-        filtroColor.value = "";
-        filtroPrecio.value = "";
-
-        mostrarProductos(productos);
-
-    }
-);
-aplicarFiltrosBoton.addEventListener("click", () => {
-
-    aplicarFiltros();
-
-    panelFiltros.classList.remove("activo");
-
-    document.querySelector("#catalogo").scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
-
-});
-
-if (botonAbrirFiltrosCatalogo) {
-
-    botonAbrirFiltrosCatalogo.addEventListener(
-        "click",
-        () => {
-
-            panelFiltros.classList.add("activo");
-
-        }
-    );
-
-}
-
-botonesCategoria.forEach(boton => {
-
-    boton.addEventListener("click", () => {
-
-        // Quitar el seleccionado anterior
-        botonesCategoria.forEach(b => {
-            b.classList.remove("activa");
-        });
-
-        // Marcar el botón que acabamos de tocar
-        boton.classList.add("activa");
-
-        // Guardar qué categoría elegimos
-        categoriaActiva = boton.dataset.categoria;
-
-        // Mostrar todos o filtrar por categoría
-        if (categoriaActiva === "TODOS") {
-
-            mostrarProductos(productos);
-
-        } else {
-
-            const filtrados = productos.filter(producto =>
-                producto.variantes.some(variante =>
-                    variante.categorias?.includes(categoriaActiva)
-                )
-            );
-
-            mostrarProductos(filtrados);
-        }
-
-    });
-
-});
-botonesCategoria.forEach(boton => {
-
-    boton.addEventListener("click", () => {
-
-        // Quitar selección anterior
-        botonesCategoria.forEach(b => {
-            b.classList.remove("activa");
-        });
-
-        // Marcar la categoría seleccionada
-        boton.classList.add("activa");
-
-        categoriaActiva = boton.dataset.categoria;
-
-        // TODOS muestra todo
-        if (categoriaActiva === "TODOS") {
-            mostrarProductos(productos);
-            return;
-        }
-
-        // Filtrar productos por categoría
-        const productosFiltrados = productos.filter(producto => {
-
-            return producto.variantes.some(variante =>
-                variante.categorias?.includes(categoriaActiva)
-            );
-
-        });
-
-        mostrarProductos(productosFiltrados);
-
-    });
-
-});
-
-/* =====================================================
-   INICIAR
-===================================================== */
-
-generarMarcas();
-
-const paginaActual = document.body.dataset.pagina;
-
-if (paginaActual === "inicio") {
-
-    const productosDestacados = productos.filter(
-        producto => producto.destacado === true
-    );
-
-    mostrarProductos(productosDestacados);
-
-} else {
-
-    mostrarProductos(productos);
-
-}
-/* =====================================================
-   VOLVER ARRIBA
-===================================================== */
-
-const botonVolverArriba =
-    document.querySelector("#volver-arriba");
-
-if (botonVolverArriba) {
-
-    window.addEventListener("scroll", () => {
-
-        if (window.scrollY > 500) {
-            botonVolverArriba.classList.add("visible");
-        } else {
-            botonVolverArriba.classList.remove("visible");
-        }
-
-    });
-
-    botonVolverArriba.addEventListener("click", () => {
-
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-
-    });
-
-}
-/* =====================================================
-   ANIMACIÓN NOSOTROS
-===================================================== */
-
-const seccionNosotros = document.querySelector(".nosotros");
-
-if (seccionNosotros) {
-
-    const observarNosotros = new IntersectionObserver(
-        (entradas) => {
-
-            entradas.forEach(entrada => {
-
-                if (entrada.isIntersecting) {
-                    entrada.target.classList.add("visible");
-                    observarNosotros.unobserve(entrada.target);
-                }
-
+ 
+ 
+ 
+    const claveProducto =
+ 
+        `${normalizar(producto.marca)}-${normalizar(producto.modelo)}`;
+ 
+ 
+ 
+    enlace.searchParams.set("producto", claveProducto);
+ 
+ 
+ 
+    if (navigator.share) {
+ 
+        try {
+ 
+            await navigator.share({
+ 
+                title: `${producto.marca} ${producto.modelo}`,
+ 
+                text: "¡Mira este armazón de Óptica Aqua! 👓",
+ 
+                url: enlace.href
+ 
             });
-
-        },
-        {
-            threshold: 0.2
-        }
-    );
-
-    observarNosotros.observe(seccionNosotros);
-}
-/* =========================
-   MENÚ MÓVIL
-========================= */
-
-(() => {
-
-    const btnMenuMovil = document.querySelector("#abrir-menu");
-    const navMenuMovil = document.querySelector("#menu-principal");
-
-    if (!btnMenuMovil || !navMenuMovil) return;
-
-    btnMenuMovil.addEventListener("click", () => {
-
-        const estaAbierto =
-            navMenuMovil.classList.toggle("menu-abierto");
-
-        btnMenuMovil.classList.toggle("activo", estaAbierto);
-
-        document.body.classList.toggle(
-            "menu-movil-abierto",
-            estaAbierto
-        );
-
-    });
-
-    navMenuMovil.querySelectorAll("a").forEach((enlace) => {
-
-        enlace.addEventListener("click", () => {
-
-            navMenuMovil.classList.remove("menu-abierto");
-            btnMenuMovil.classList.remove("activo");
-            document.body.classList.remove("menu-movil-abierto");
-
-        });
-
-    });
-
-})();
-/* =========================
-   ZOOM INTERACTIVO PRODUCTO
-========================= */
-
-document.addEventListener("mousemove", (evento) => {
-
-    if (window.innerWidth <= 768) return;
-
-    const contenedor = evento.target.closest(".modal-imagen");
-
-    if (!contenedor) return;
-
-    const imagen = contenedor.querySelector("img");
-
-    if (!imagen) return;
-
-    const rect = contenedor.getBoundingClientRect();
-
-    const x =
-        ((evento.clientX - rect.left) / rect.width) * 100;
-
-    const y =
-        ((evento.clientY - rect.top) / rect.height) * 100;
-
-    imagen.style.transformOrigin = `${x}% ${y}%`;
-});
-
-
-document.addEventListener("mouseout", (evento) => {
-
-    const contenedor = evento.target.closest(".modal-imagen");
-
-    if (!contenedor) return;
-
-    if (contenedor.contains(evento.relatedTarget)) return;
-
-    const imagen = contenedor.querySelector("img");
-
-    if (imagen) {
-        imagen.style.transformOrigin = "50% 50%";
-    }
-
-});
-/* =========================
-   NOSOTROS - CARRUSEL
-========================= */
-
-(() => {
-
-    const carrusel = document.querySelector(".nosotros-carrusel");
-    const slides = document.querySelectorAll(".nosotros-slide");
-    const indicadores = document.querySelectorAll(".indicador");
-
-    const anterior = document.querySelector("#nosotros-anterior");
-    const siguiente = document.querySelector("#nosotros-siguiente");
-
-    if (
-        !carrusel ||
-        slides.length === 0 ||
-        !anterior ||
-        !siguiente
-    ) return;
-
-    let slideActual = 0;
-    let intervalo;
-const seccionNosotrosCarrusel = document.querySelector(".nosotros");
-
-const coloresNosotros = [
-    "#3b686f", // Presentación
-    "#287c82", // 11 años
-    "#315f70", // Salud visual
-    "#168f91"  // Sucursales
-];
-
-    function mostrarSlide(indice) {
-
-        slides[slideActual].classList.remove("activo");
-        indicadores[slideActual]?.classList.remove("activo");
-
-        slideActual = indice;
-
-        if (slideActual >= slides.length) {
-            slideActual = 0;
-        }
-
-        if (slideActual < 0) {
-            slideActual = slides.length - 1;
-        }
-
-       slides[slideActual].classList.add("activo");
-indicadores[slideActual]?.classList.add("activo");
-
-if (seccionNosotrosCarrusel) {
-    seccionNosotrosCarrusel.style.backgroundColor =
-        coloresNosotros[slideActual];
-}
-
-    }
-    function iniciarCarrusel() {
-
-        clearInterval(intervalo);
-
-        intervalo = setInterval(() => {
-            mostrarSlide(slideActual + 1);
-        }, 5000);
-    }
-
-
-    /* FLECHAS */
-
-    siguiente.addEventListener("click", () => {
-        mostrarSlide(slideActual + 1);
-        iniciarCarrusel();
-    });
-
-    anterior.addEventListener("click", () => {
-        mostrarSlide(slideActual - 1);
-        iniciarCarrusel();
-    });
-
-
-    /* INDICADORES */
-
-    indicadores.forEach((indicador, indice) => {
-
-        indicador.addEventListener("click", () => {
-            mostrarSlide(indice);
-            iniciarCarrusel();
-        });
-
-    });
-
-
-    /* PAUSAR AL PONER EL CURSOR */
-
-    carrusel.addEventListener("mouseenter", () => {
-        clearInterval(intervalo);
-    });
-
-    carrusel.addEventListener("mouseleave", () => {
-        iniciarCarrusel();
-    });
-
-
-    /* INICIAR */
-
-    iniciarCarrusel();
-
-})();
-/* =========================
-   CONTACTO - WHATSAPP
-========================= */
-
-const formularioContacto = document.querySelector("#formulario-contacto");
-
-if (formularioContacto) {
-
-    formularioContacto.addEventListener("submit", (evento) => {
-
-        evento.preventDefault();
-
-        const nombre = document.querySelector("#contacto-nombre").value;
-        const ciudad = document.querySelector("#contacto-ciudad").value;
-        const correo = document.querySelector("#contacto-correo").value;
-        const mensaje = document.querySelector("#contacto-mensaje").value;
-
-        const numeroWhatsApp = "529211024546";
-
-        const textoWhatsApp =
-`Hola, soy ${nombre}.
-
-Les escribo desde ${ciudad}.
-
-${mensaje}
-
-Correo de contacto: ${correo || "No proporcionado"}`;
-
-        const enlaceWhatsApp =
-            `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(textoWhatsApp)}`;
-
-        window.open(enlaceWhatsApp, "_blank");
-
-    });
-
-}
-/* =========================
-   MENÚ ACTIVO SEGÚN SECCIÓN
-========================= */
-
-(() => {
-
-    const enlacesMenu = document.querySelectorAll(
-        '#menu-principal a[href^="#"]'
-    );
-
-    const secciones = [
-        document.querySelector("#inicio"),
-        document.querySelector("#nosotros"),
-        document.querySelector("#contacto")
-    ].filter(Boolean);
-
-    if (enlacesMenu.length === 0 || secciones.length === 0) return;
-
-
-    function actualizarMenu() {
-
-        const posicion = window.scrollY + 180;
-        let seccionActual = "inicio";
-
-        secciones.forEach((seccion) => {
-            if (posicion >= seccion.offsetTop) {
-                seccionActual = seccion.id;
+ 
+        } catch (error) {
+ 
+            if (error.name !== "AbortError") {
+ 
+                console.error(error);
+ 
             }
+ 
+        }
+ 
+    } else {
+ 
+        try {
+ 
+            await navigator.clipboard.writeText(enlace.href);
+ 
+            alert("¡Enlace copiado! 💗");
+ 
+        } catch (error) {
+ 
+            prompt("Copia este enlace:", enlace.href);
+ 
+        }
+ 
+    }
+ 
+ 
+ 
+});
+ 
+}
+ 
+ 
+ 
+/* =====================================================
+ 
+   MOSTRAR VARIANTE EN MODAL
+ 
+===================================================== */
+ 
+ 
+ 
+function mostrarVariante(variante) {
+ 
+ 
+ 
+    const detalle =
+ 
+        document.querySelector("#detalle-variante");
+ 
+ 
+ 
+    const imagenModal =
+ 
+        document.querySelector("#imagen-modal");
+ 
+ 
+ 
+    detalle.innerHTML = `
+ 
+ 
+ 
+        <p>
+ 
+            ${variante.caracteristicas}
+ 
+        </p>
+ 
+ 
+ 
+        <p>
+ 
+            Existencia: ${variante.cantidad}
+ 
+        </p>
+ 
+ 
+ 
+        ${
+ 
+            variante.precio !== null
+ 
+                ? `<p class="precio">
+ 
+                    $${variante.precio} MXN
+ 
+                   </p>`
+ 
+                : ""
+ 
+        }
+ 
+ 
+ 
+    `;
+ 
+ 
+ 
+ 
+ 
+    if (
+ 
+        variante.imagenes &&
+ 
+        variante.imagenes.length > 0
+ 
+    ) {
+ 
+ 
+ 
+        imagenModal.src =
+ 
+            variante.imagenes[0];
+ 
+ 
+ 
+ 
+ 
+        const miniaturas =
+ 
+            document.createElement("div");
+ 
+ 
+ 
+        miniaturas.classList.add("miniaturas-modal");
+ 
+ 
+ 
+ 
+ 
+        variante.imagenes.forEach(
+ 
+            (imagen, indice) => {
+ 
+ 
+ 
+                const miniatura =
+ 
+                    document.createElement("img");
+ 
+ 
+ 
+                miniatura.src = imagen;
+ 
+                miniatura.alt =
+ 
+                    `Vista ${indice + 1}`;
+ 
+ 
+ 
+                if (indice === 0) {
+ 
+                    miniatura.classList.add("activa");
+ 
+                }
+ 
+ 
+ 
+ 
+ 
+                miniatura.addEventListener(
+ 
+                    "click",
+ 
+                    () => {
+ 
+ 
+ 
+                        imagenModal.src = imagen;
+ 
+ 
+ 
+                        miniaturas
+ 
+                            .querySelectorAll("img")
+ 
+                            .forEach(img =>
+ 
+                                img.classList.remove("activa")
+ 
+                            );
+ 
+ 
+ 
+                        miniatura.classList.add("activa");
+ 
+ 
+ 
+                    }
+ 
+                );
+ 
+ 
+ 
+ 
+ 
+                miniaturas.appendChild(miniatura);
+ 
+ 
+ 
+            }
+ 
+        );
+ 
+ 
+ 
+ 
+ 
+        detalle.prepend(miniaturas);
+ 
+ 
+ 
+    }
+ 
+ 
+ 
+}
+ 
+ 
+ 
+ 
+ 
+/* =====================================================
+ 
+   GENERAR MARCAS AUTOMÁTICAMENTE
+ 
+===================================================== */
+ 
+ 
+ 
+function generarMarcas() {
+ 
+ 
+ 
+    const marcas = [
+ 
+        ...new Set(
+ 
+            productos.map(
+ 
+                producto => producto.marca
+ 
+            )
+ 
+        )
+ 
+    ];
+ 
+ 
+ 
+ 
+ 
+    marcas.sort(
+ 
+        (a, b) =>
+ 
+            a.localeCompare(b, "es")
+ 
+    );
+ 
+ 
+ 
+ 
+ 
+    marcas.forEach(marca => {
+ 
+ 
+ 
+        const opcion =
+ 
+            document.createElement("option");
+ 
+ 
+ 
+        opcion.value = marca;
+ 
+ 
+ 
+        opcion.textContent = marca;
+ 
+ 
+ 
+        filtroMarca.appendChild(opcion);
+ 
+ 
+ 
+    });
+ 
+ 
+ 
+}
+ 
+ 
+ 
+ 
+ 
+/* =====================================================
+ 
+   FILTROS
+ 
+===================================================== */
+ 
+ 
+ 
+function aplicarFiltros() {
+ 
+ 
+ 
+    const texto =
+ 
+        normalizar(buscarModelo.value);
+ 
+ 
+ 
+    const marca =
+ 
+        normalizar(filtroMarca.value);
+ 
+ 
+ 
+    const material =
+ 
+        normalizar(filtroMaterial.value);
+ 
+ 
+ 
+    const color =
+ 
+        normalizar(filtroColor.value);
+ 
+ 
+ 
+    const precio =
+ 
+        filtroPrecio.value;
+ 
+ 
+ 
+ 
+ 
+    const resultados =
+ 
+        productos.filter(producto => {
+ 
+ 
+ 
+ 
+ 
+            const textoProducto =
+ 
+                normalizar(`
+ 
+ 
+ 
+                    ${producto.marca}
+ 
+ 
+ 
+                    ${producto.modelo}
+ 
+ 
+ 
+                    ${
+ 
+                        producto.variantes
+ 
+                            .map(
+ 
+                                variante =>
+ 
+                                    variante.caracteristicas
+ 
+                            )
+ 
+                            .join(" ")
+ 
+                    }
+ 
+ 
+ 
+                `);
+ 
+ 
+ 
+ 
+ 
+            const coincideTexto =
+ 
+                textoProducto.includes(texto);
+ 
+ 
+ 
+ 
+ 
+            const coincideMarca =
+ 
+                marca === "" ||
+ 
+                normalizar(producto.marca) === marca;
+ 
+ 
+ 
+ 
+ 
+            const coincideMaterial =
+ 
+                material === "" ||
+ 
+ 
+ 
+                producto.variantes.some(
+ 
+                    variante =>
+ 
+                        variante.materiales.some(
+ 
+                            item =>
+ 
+                                normalizar(item) === material
+ 
+                        )
+ 
+                );
+ 
+ 
+ 
+ 
+ 
+            const coincideColor =
+ 
+    color === "" ||
+ 
+ 
+ 
+    producto.variantes.some(
+ 
+        variante =>
+ 
+            variante.colores.some(
+ 
+                item => {
+ 
+                    const colorVariante = normalizar(item);
+ 
+ 
+ 
+                    return colorVariante
+ 
+                        .split(/\s+|\/|,|-|CON|Y/)
+ 
+                        .map(c => c.trim())
+ 
+                        .filter(Boolean)
+ 
+                        .includes(color);
+ 
+                }
+ 
+            )
+ 
+    );
+ 
+ 
+ 
+ 
+ 
+            const coincidePrecio =
+ 
+                precio === "" ||
+ 
+ 
+ 
+                producto.variantes.some(
+ 
+                    variante =>
+ 
+                        variante.precio !== null &&
+ 
+                        variante.precio <= Number(precio)
+ 
+                );
+ 
+const coincideCategoria =
+ 
+    categoriaActiva === "TODOS" ||
+ 
+ 
+ 
+    producto.variantes.some(
+ 
+        variante =>
+ 
+            variante.categorias?.includes(categoriaActiva)
+ 
+    );
+ 
+ 
+ 
+            return (
+ 
+ 
+ 
+    coincideTexto &&
+ 
+    coincideMarca &&
+ 
+    coincideMaterial &&
+ 
+    coincideColor &&
+ 
+    coincidePrecio &&
+ 
+    coincideCategoria
+ 
+ 
+ 
+);
+ 
+ 
+ 
         });
-
-
-        enlacesMenu.forEach((enlace) => {
-
-            const destino = enlace.getAttribute("href");
-
-            enlace.classList.toggle(
-                "activo",
-                destino === `#${seccionActual}`
+ 
+ 
+ 
+ 
+ 
+    mostrarProductos(resultados);
+ 
+ 
+ 
+}
+ 
+ 
+ 
+ 
+ 
+/* =====================================================
+ 
+   EVENTOS
+ 
+===================================================== */
+ 
+ 
+ 
+if (botonAbrirFiltros) {
+ 
+ 
+ 
+    botonAbrirFiltros.addEventListener(
+ 
+        "click",
+ 
+        () => {
+ 
+ 
+ 
+            panelFiltros.classList.add("activo");
+ 
+ 
+ 
+        }
+ 
+    );
+ 
+ 
+ 
+}
+ 
+ 
+ 
+ 
+ 
+botonCerrarFiltros.addEventListener(
+ 
+    "click",
+ 
+    () => {
+ 
+ 
+ 
+        panelFiltros.classList.remove("activo");
+ 
+ 
+ 
+    }
+ 
+);
+ 
+ 
+ 
+ 
+ 
+buscarModelo.addEventListener(
+ 
+    "input",
+ 
+    aplicarFiltros
+ 
+);
+ 
+ 
+ 
+ 
+ 
+filtroMarca.addEventListener(
+ 
+    "change",
+ 
+    aplicarFiltros
+ 
+);
+ 
+ 
+ 
+ 
+ 
+filtroMaterial.addEventListener(
+ 
+    "change",
+ 
+    aplicarFiltros
+ 
+);
+ 
+ 
+ 
+ 
+ 
+filtroColor.addEventListener(
+ 
+    "change",
+ 
+    aplicarFiltros
+ 
+);
+ 
+ 
+ 
+ 
+ 
+filtroPrecio.addEventListener(
+ 
+    "change",
+ 
+    aplicarFiltros
+ 
+);
+ 
+ 
+ 
+ 
+ 
+limpiarFiltros.addEventListener(
+ 
+    "click",
+ 
+    () => {
+ 
+ 
+ 
+        buscarModelo.value = "";
+ 
+        filtroMarca.value = "";
+ 
+        filtroMaterial.value = "";
+ 
+        filtroColor.value = "";
+ 
+        filtroPrecio.value = "";
+ 
+ 
+ 
+        mostrarProductos(productos);
+ 
+ 
+ 
+    }
+ 
+);
+ 
+aplicarFiltrosBoton.addEventListener("click", () => {
+ 
+ 
+ 
+    aplicarFiltros();
+ 
+ 
+ 
+    panelFiltros.classList.remove("activo");
+ 
+ 
+ 
+    document.querySelector("#catalogo").scrollIntoView({
+ 
+        behavior: "smooth",
+ 
+        block: "start"
+ 
+    });
+ 
+ 
+ 
+});
+ 
+ 
+ 
+if (botonAbrirFiltrosCatalogo) {
+ 
+ 
+ 
+    botonAbrirFiltrosCatalogo.addEventListener(
+ 
+        "click",
+ 
+        () => {
+ 
+ 
+ 
+            panelFiltros.classList.add("activo");
+ 
+ 
+ 
+        }
+ 
+    );
+ 
+ 
+ 
+}
+ 
+ 
+ 
+botonesCategoria.forEach(boton => {
+ 
+ 
+ 
+    boton.addEventListener("click", () => {
+ 
+ 
+ 
+        // Quitar el seleccionado anterior
+ 
+        botonesCategoria.forEach(b => {
+ 
+            b.classList.remove("activa");
+ 
+        });
+ 
+ 
+ 
+        // Marcar el botón que acabamos de tocar
+ 
+        boton.classList.add("activa");
+ 
+ 
+ 
+        // Guardar qué categoría elegimos
+ 
+        categoriaActiva = boton.dataset.categoria;
+ 
+ 
+ 
+        // Mostrar todos o filtrar por categoría
+ 
+        if (categoriaActiva === "TODOS") {
+ 
+ 
+ 
+            mostrarProductos(productos);
+ 
+ 
+ 
+        } else {
+ 
+ 
+ 
+            const filtrados = productos.filter(producto =>
+ 
+                producto.variantes.some(variante =>
+ 
+                    variante.categorias?.includes(categoriaActiva)
+ 
+                )
+ 
             );
-
+ 
+ 
+ 
+            mostrarProductos(filtrados);
+ 
+        }
+ 
+ 
+ 
+    });
+ 
+ 
+ 
+});
+ 
+botonesCategoria.forEach(boton => {
+ 
+ 
+ 
+    boton.addEventListener("click", () => {
+ 
+ 
+ 
+        // Quitar selección anterior
+ 
+        botonesCategoria.forEach(b => {
+ 
+            b.classList.remove("activa");
+ 
         });
-
-    }
-
-
-    window.addEventListener("scroll", actualizarMenu);
-
-    actualizarMenu();
-
+ 
+ 
+ 
+        // Marcar la categoría seleccionada
+ 
+        boton.classList.add("activa");
+ 
+ 
+ 
+        categoriaActiva = boton.dataset.categoria;
+ 
+ 
+ 
+        // TODOS muestra todo
+ 
+        if (categoriaActiva === "TODOS") {
+ 
+            mostrarProductos(productos);
+ 
+            return;
+ 
+        }
+ 
+ 
+ 
+        // Filtrar productos por categoría
+ 
+        const productosFiltrados = productos.filter(producto => {
+ 
+ 
+ 
+            return producto.variantes.some(variante =>
+ 
+                variante.categorias?.includes(categoriaActiva)
+ 
+            );
+ 
+ 
+ 
+        });
+ 
+ 
+ 
+        mostrarProductos(productosFiltrados);
+ 
+ 
+ 
+    });
+ 
+ 
+ 
+});
+ 
+ 
+ 
+/* =====================================================
+ 
+   INICIAR
+ 
+===================================================== */
+ 
+ 
+ 
+generarMarcas();
+ 
+ 
+ 
+const paginaActual = document.body.dataset.pagina;
+ 
+ 
+ 
+if (paginaActual === "inicio") {
+ 
+ 
+ 
+    const productosDestacados = productos.filter(
+ 
+        producto => producto.destacado === true
+ 
+    );
+ 
+ 
+ 
+    mostrarProductos(productosDestacados);
+ 
+ 
+ 
+} else {
+ 
+ 
+ 
+    mostrarProductos(productos);
+ 
+ 
+ 
+}
+ 
+/* =====================================================
+ 
+   if (paginaActual !== "inicio") {
+    abrirProductoCompartido();
+}
+ 
+VOLVER ARRIBA
+ 
+===================================================== */
+ 
+ 
+ 
+const botonVolverArriba =
+ 
+    document.querySelector("#volver-arriba");
+ 
+ 
+ 
+if (botonVolverArriba) {
+ 
+ 
+ 
+    window.addEventListener("scroll", () => {
+ 
+ 
+ 
+        if (window.scrollY > 500) {
+ 
+            botonVolverArriba.classList.add("visible");
+ 
+        } else {
+ 
+            botonVolverArriba.classList.remove("visible");
+ 
+        }
+ 
+ 
+ 
+    });
+ 
+ 
+ 
+    botonVolverArriba.addEventListener("click", () => {
+ 
+ 
+ 
+        window.scrollTo({
+ 
+            top: 0,
+ 
+            behavior: "smooth"
+ 
+        });
+ 
+ 
+ 
+    });
+ 
+ 
+ 
+}
+ 
+/* =====================================================
+ 
+   ANIMACIÓN NOSOTROS
+ 
+===================================================== */
+ 
+ 
+ 
+const seccionNosotros = document.querySelector(".nosotros");
+ 
+ 
+ 
+if (seccionNosotros) {
+ 
+ 
+ 
+    const observarNosotros = new IntersectionObserver(
+ 
+        (entradas) => {
+ 
+ 
+ 
+            entradas.forEach(entrada => {
+ 
+ 
+ 
+                if (entrada.isIntersecting) {
+ 
+                    entrada.target.classList.add("visible");
+ 
+                    observarNosotros.unobserve(entrada.target);
+ 
+                }
+ 
+ 
+ 
+            });
+ 
+ 
+ 
+        },
+ 
+        {
+ 
+            threshold: 0.2
+ 
+        }
+ 
+    );
+ 
+ 
+ 
+    observarNosotros.observe(seccionNosotros);
+ 
+}
+ 
+/* =========================
+ 
+   MENÚ MÓVIL
+ 
+========================= */
+ 
+ 
+ 
+(() => {
+ 
+ 
+ 
+    const btnMenuMovil = document.querySelector("#abrir-menu");
+ 
+    const navMenuMovil = document.querySelector("#menu-principal");
+ 
+ 
+ 
+    if (!btnMenuMovil || !navMenuMovil) return;
+ 
+ 
+ 
+    btnMenuMovil.addEventListener("click", () => {
+ 
+ 
+ 
+        const estaAbierto =
+ 
+            navMenuMovil.classList.toggle("menu-abierto");
+ 
+ 
+ 
+        btnMenuMovil.classList.toggle("activo", estaAbierto);
+ 
+ 
+ 
+        document.body.classList.toggle(
+ 
+            "menu-movil-abierto",
+ 
+            estaAbierto
+ 
+        );
+ 
+ 
+ 
+    });
+ 
+ 
+ 
+    navMenuMovil.querySelectorAll("a").forEach((enlace) => {
+ 
+ 
+ 
+        enlace.addEventListener("click", () => {
+ 
+ 
+ 
+            navMenuMovil.classList.remove("menu-abierto");
+ 
+            btnMenuMovil.classList.remove("activo");
+ 
+            document.body.classList.remove("menu-movil-abierto");
+ 
+ 
+ 
+        });
+ 
+ 
+ 
+    });
+ 
+ 
+ 
 })();
+ 
+/* =========================
+ 
+   ZOOM INTERACTIVO PRODUCTO
+ 
+========================= */
+ 
+ 
+ 
+document.addEventListener("mousemove", (evento) => {
+ 
+ 
+ 
+    if (window.innerWidth <= 768) return;
+ 
+ 
+ 
+    const contenedor = evento.target.closest(".modal-imagen");
+ 
+ 
+ 
+    if (!contenedor) return;
+ 
+ 
+ 
+    const imagen = contenedor.querySelector("img");
+ 
+ 
+ 
+    if (!imagen) return;
+ 
+ 
+ 
+    const rect = contenedor.getBoundingClientRect();
+ 
+ 
+ 
+    const x =
+ 
+        ((evento.clientX - rect.left) / rect.width) * 100;
+ 
+ 
+ 
+    const y =
+ 
+        ((evento.clientY - rect.top) / rect.height) * 100;
+ 
+ 
+ 
+    imagen.style.transformOrigin = `${x}% ${y}%`;
+ 
+});
+ 
+ 
+ 
+ 
+ 
+document.addEventListener("mouseout", (evento) => {
+ 
+ 
+ 
+    const contenedor = evento.target.closest(".modal-imagen");
+ 
+ 
+ 
+    if (!contenedor) return;
+ 
+ 
+ 
+    if (contenedor.contains(evento.relatedTarget)) return;
+ 
+ 
+ 
+    const imagen = contenedor.querySelector("img");
+ 
+ 
+ 
+    if (imagen) {
+ 
+        imagen.style.transformOrigin = "50% 50%";
+ 
+    }
+ 
+ 
+ 
+});
+ 
+/* =========================
+ 
+   NOSOTROS - CARRUSEL
+ 
+========================= */
+ 
+ 
+ 
+(() => {
+ 
+ 
+ 
+    const carrusel = document.querySelector(".nosotros-carrusel");
+ 
+    const slides = document.querySelectorAll(".nosotros-slide");
+ 
+    const indicadores = document.querySelectorAll(".indicador");
+ 
+ 
+ 
+    const anterior = document.querySelector("#nosotros-anterior");
+ 
+    const siguiente = document.querySelector("#nosotros-siguiente");
+ 
+ 
+ 
+    if (
+ 
+        !carrusel ||
+ 
+        slides.length === 0 ||
+ 
+        !anterior ||
+ 
+        !siguiente
+ 
+    ) return;
+ 
+ 
+ 
+    let slideActual = 0;
+ 
+    let intervalo;
+ 
+const seccionNosotrosCarrusel = document.querySelector(".nosotros");
+ 
+ 
+ 
+const coloresNosotros = [
+ 
+    "#3b686f", // Presentación
+ 
+    "#287c82", // 11 años
+ 
+    "#315f70", // Salud visual
+ 
+    "#168f91"  // Sucursales
+ 
+];
+ 
+ 
+ 
+    function mostrarSlide(indice) {
+ 
+ 
+ 
+        slides[slideActual].classList.remove("activo");
+ 
+        indicadores[slideActual]?.classList.remove("activo");
+ 
+ 
+ 
+        slideActual = indice;
+ 
+ 
+ 
+        if (slideActual >= slides.length) {
+ 
+            slideActual = 0;
+ 
+        }
+ 
+ 
+ 
+        if (slideActual < 0) {
+ 
+            slideActual = slides.length - 1;
+ 
+        }
+ 
+ 
+ 
+       slides[slideActual].classList.add("activo");
+ 
+indicadores[slideActual]?.classList.add("activo");
+ 
+ 
+ 
+if (seccionNosotrosCarrusel) {
+ 
+    seccionNosotrosCarrusel.style.backgroundColor =
+ 
+        coloresNosotros[slideActual];
+ 
+}
+ 
+ 
+ 
+    }
+ 
+    function iniciarCarrusel() {
+ 
+ 
+ 
+        clearInterval(intervalo);
+ 
+ 
+ 
+        intervalo = setInterval(() => {
+ 
+            mostrarSlide(slideActual + 1);
+ 
+        }, 5000);
+ 
+    }
+ 
+ 
+ 
+ 
+ 
+    /* FLECHAS */
+ 
+ 
+ 
+    siguiente.addEventListener("click", () => {
+ 
+        mostrarSlide(slideActual + 1);
+ 
+        iniciarCarrusel();
+ 
+    });
+ 
+ 
+ 
+    anterior.addEventListener("click", () => {
+ 
+        mostrarSlide(slideActual - 1);
+ 
+        iniciarCarrusel();
+ 
+    });
+ 
+ 
+ 
+ 
+ 
+    /* INDICADORES */
+ 
+ 
+ 
+    indicadores.forEach((indicador, indice) => {
+ 
+ 
+ 
+        indicador.addEventListener("click", () => {
+ 
+            mostrarSlide(indice);
+ 
+            iniciarCarrusel();
+ 
+        });
+ 
+ 
+ 
+    });
+ 
+ 
+ 
+ 
+ 
+    /* PAUSAR AL PONER EL CURSOR */
+ 
+ 
+ 
+    carrusel.addEventListener("mouseenter", () => {
+ 
+        clearInterval(intervalo);
+ 
+    });
+ 
+ 
+ 
+    carrusel.addEventListener("mouseleave", () => {
+ 
+        iniciarCarrusel();
+ 
+    });
+ 
+ 
+ 
+ 
+ 
+    /* INICIAR */
+ 
+ 
+ 
+    iniciarCarrusel();
+ 
+ 
+ 
+})();
+ 
+/* =========================
+ 
+   CONTACTO - WHATSAPP
+ 
+========================= */
+ 
+ 
+ 
+const formularioContacto = document.querySelector("#formulario-contacto");
+ 
+ 
+ 
+if (formularioContacto) {
+ 
+ 
+ 
+    formularioContacto.addEventListener("submit", (evento) => {
+ 
+ 
+ 
+        evento.preventDefault();
+ 
+ 
+ 
+        const nombre = document.querySelector("#contacto-nombre").value;
+ 
+        const ciudad = document.querySelector("#contacto-ciudad").value;
+ 
+        const correo = document.querySelector("#contacto-correo").value;
+ 
+        const mensaje = document.querySelector("#contacto-mensaje").value;
+ 
+ 
+ 
+        const numeroWhatsApp = "529211024546";
+ 
+ 
+ 
+        const textoWhatsApp =
+ 
+`Hola, soy ${nombre}.
+ 
+ 
+ 
+Les escribo desde ${ciudad}.
+ 
+ 
+ 
+${mensaje}
+ 
+ 
+ 
+Correo de contacto: ${correo || "No proporcionado"}`;
+ 
+ 
+ 
+        const enlaceWhatsApp =
+ 
+            `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(textoWhatsApp)}`;
+ 
+ 
+ 
+        window.open(enlaceWhatsApp, "_blank");
+ 
+ 
+ 
+    });
+ 
+ 
+ 
+}
+ 
+/* =========================
+ 
+   MENÚ ACTIVO SEGÚN SECCIÓN
+ 
+========================= */
+ 
+ 
+ 
+(() => {
+ 
+ 
+ 
+    const enlacesMenu = document.querySelectorAll(
+ 
+        '#menu-principal a[href^="#"]'
+ 
+    );
+ 
+ 
+ 
+    const secciones = [
+ 
+        document.querySelector("#inicio"),
+ 
+        document.querySelector("#nosotros"),
+ 
+        document.querySelector("#contacto")
+ 
+    ].filter(Boolean);
+ 
+ 
+ 
+    if (enlacesMenu.length === 0 || secciones.length === 0) return;
+ 
+ 
+ 
+ 
+ 
+    function actualizarMenu() {
+ 
+ 
+ 
+        const posicion = window.scrollY + 180;
+ 
+        let seccionActual = "inicio";
+ 
+ 
+ 
+        secciones.forEach((seccion) => {
+ 
+            if (posicion >= seccion.offsetTop) {
+ 
+                seccionActual = seccion.id;
+ 
+            }
+ 
+        });
+ 
+ 
+ 
+ 
+ 
+        enlacesMenu.forEach((enlace) => {
+ 
+ 
+ 
+            const destino = enlace.getAttribute("href");
+ 
+ 
+ 
+            enlace.classList.toggle(
+ 
+                "activo",
+ 
+                destino === `#${seccionActual}`
+ 
+            );
+ 
+ 
+ 
+        });
+ 
+ 
+ 
+    }
+ 
+ 
+ 
+ 
+ 
+    window.addEventListener("scroll", actualizarMenu);
+ 
+ 
+ 
+    actualizarMenu();
+ 
+ 
+ 
+})();
+ 
 // =========================
+ 
 // MODAL SOLICITAR CITA
+ 
 // =========================
-
+ 
+ 
+ 
 const abrirCita = document.getElementById("abrirCita");
+ 
 const cerrarCita = document.getElementById("cerrarCita");
+ 
 const modalCita = document.getElementById("modalCita");
-
-abrirCita.addEventListener("click", () => {
-    modalCita.classList.add("activo");
-});
-
-cerrarCita.addEventListener("click", () => {
-    modalCita.classList.remove("activo");
-});
-
-// Cerrar al tocar fuera de la tarjeta
-modalCita.addEventListener("click", (e) => {
-    if (e.target === modalCita) {
+ 
+ 
+ 
+if (abrirCita && modalCita) {
+ 
+    abrirCita.addEventListener("click", () => {
+ 
+        modalCita.classList.add("activo");
+ 
+    });
+ 
+}
+ 
+ 
+ 
+if (cerrarCita && modalCita) {
+ 
+    cerrarCita.addEventListener("click", () => {
+ 
         modalCita.classList.remove("activo");
-    }
-});
+ 
+    });
+ 
+}
+ 
+ 
+ 
+// Cerrar al tocar fuera de la tarjeta
+ 
+if (modalCita) {
+ 
+    modalCita.addEventListener("click", (e) => {
+ 
+        if (e.target === modalCita) {
+ 
+            modalCita.classList.remove("activo");
+ 
+        }
+ 
+    });
+ 
+}
+ 
+ 
+ 
 // =========================
+ 
 // SOLICITAR CITA POR WHATSAPP
+ 
 // =========================
-
+ 
+ 
+ 
 const formCita = document.getElementById("formCita");
-
-formCita.addEventListener("submit", (evento) => {
-
+ 
+ 
+ 
+if (formCita) {
+ 
+    formCita.addEventListener("submit", (evento) => {
+ 
+ 
+ 
     evento.preventDefault();
-
+ 
+ 
+ 
     const nombre =
+ 
         document.getElementById("nombreCita").value;
-
+ 
+ 
+ 
     const telefono =
+ 
         document.getElementById("telefonoCita").value;
-
+ 
+ 
+ 
     const sucursal =
+ 
         document.getElementById("sucursalCita").value;
-
+ 
+ 
+ 
     const fecha =
+ 
         document.getElementById("fechaCita").value;
-
+ 
+ 
+ 
     const hora =
+ 
         document.getElementById("horaCita").value;
-
-
+ 
+ 
+ 
+ 
+ 
     // WhatsApp según sucursal
+ 
     let numeroWhatsApp = "";
-
+ 
+ 
+ 
     if (sucursal === "Divertiplaza") {
+ 
         numeroWhatsApp = "522293717058";
+ 
     }
-
+ 
+ 
+ 
     if (sucursal === "Plaza Santa Ana") {
+ 
         numeroWhatsApp = "529211024546";
+ 
     }
-
-
+ 
+ 
+ 
+ 
+ 
     // Convertir fecha a formato más bonito
+ 
     const fechaPartes = fecha.split("-");
-
+ 
+ 
+ 
     const fechaBonita =
+ 
         `${fechaPartes[2]}/${fechaPartes[1]}/${fechaPartes[0]}`;
-
-
+ 
+ 
+ 
+ 
+ 
     // Mensaje para WhatsApp
+ 
     const mensaje =
+ 
 `Hola, me gustaría solicitar una cita en Óptica Aqua 😊
-
+ 
+ 
+ 
 Nombre: ${nombre}
+ 
 Teléfono: ${telefono}
+ 
 Sucursal: ${sucursal}
+ 
 Fecha deseada: ${fechaBonita}
+ 
 Hora deseada: ${hora}
-
+ 
+ 
+ 
 ¿Tienen disponibilidad en ese horario?`;
-
-
+ 
+ 
+ 
+ 
+ 
     const enlaceWhatsApp =
+ 
         `https://wa.me/${numeroWhatsApp}?text=${encodeURIComponent(mensaje)}`;
-
-
+ 
+ 
+ 
+ 
+ 
     window.open(enlaceWhatsApp, "_blank");
-
+ 
+ 
+ 
 });
+ 
+} // Fin de if (formCita)
