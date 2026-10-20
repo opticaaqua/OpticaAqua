@@ -787,7 +787,7 @@ const inventario = [
         color: "DORADO",
         cantidad: 1,
         precio: null,
-        imagenes: ["imagenes/.png"],
+        imagenes: ["imagenes/caffsen915.png"],
         categorias: ["HOMBRE"]
     },
 
