@@ -80,8 +80,8 @@ const inventario = [
         color: "AZUL MARINO",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/ROWAN.png", "imagenes/ROWAN2.png"],
+        categorias: ["HOMBRE"]
     },
 
     {
@@ -91,8 +91,8 @@ const inventario = [
         color: "AZUL MARINO",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/lookbook.png", "imagenes/lookbook2.png"],
+        categorias: ["HOMBRE"]
     },
 
     {
@@ -396,8 +396,9 @@ const inventario = [
         color: "AZUL MIEL",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/BV88.png",
+                "imagenes/BV88.png"],
+        categorias: ["HOMBRE"]
     },
 
     {
@@ -501,8 +502,8 @@ const inventario = [
         color: "PLATA",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/WHARTON7009.png", "imagenes/WHARTON70092.png"],
+        categorias: ["HOMBRE"]
     },
 
     {
@@ -786,8 +787,8 @@ const inventario = [
         color: "DORADO",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/caffsen915"],
+        categorias: ["HOMBRE"]
     },
 
     {
@@ -2135,8 +2136,8 @@ const inventario = [
         color: "AZUL GRIS",
         cantidad: 1,
         precio: null,
-        imagenes: [],
-        categorias: []
+        imagenes: ["imagenes/ZOZA8573.png", "imagenes/ZOZA85732.png"],
+        categorias: ["HOMBRE"]
     },
 
     {
